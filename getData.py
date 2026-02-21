@@ -1,2 +1,2 @@
 def getData(file):
-    pass
+    
