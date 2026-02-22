@@ -4,7 +4,7 @@
 - Losers play loser so on blah blah blah i forgot the algo
 - Okay 
 - Everything is wrong here except the first point
-
+- I lied that was also wrong 
 # First DATA
 - Lets figure out how and what data is needed
   - MSeasonDetailed.csv will do for the start
