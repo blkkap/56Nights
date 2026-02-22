@@ -16,7 +16,7 @@ def getTeamStats(file):
                     'OppID': df['LTeamID'],
                     'PointsFor': df['WScore'],
                     'PointsAgainst': df['LScore'],
-                    'Poss': df['WFGA'] - df['WOR'] + df['LTO'] + 0.475 * df['WFTA'],
+                    'Poss': df['WFGA'] - df['WOR'] + df['WTO'] + 0.475 * df['WFTA'],
                     'FGM': df['WFGM'],
                     'FGA': df['WFGA'],
                     'FGM3': df['WFGM3'],
@@ -59,6 +59,17 @@ def getTeamStats(file):
                     })
 
                 team_games = pd.concat([winners,losers], ignore_index=True)
+                '''
+                Uncommenting this will get the poss_opp for each row but since they are ~similiar we can just use the
+                curr row poss for each future calculation
+                team_games = pd.merge(
+                        team_games,
+                        team_games[['Seasons', 'DayNum', 'TeamID', 'OppID', 'Poss']],
+                        left_on=['Season', 'DayNum', 'TeamID', 'OppID']
+                        right_on=['Season', 'DayNum', 'OppID', 'TeamID']
+                        suffixes=('','_opp')
+                )
+                '''
                 team_games.to_csv('data/preprocess/M_Team_games_stats.csv', index=False)
 
     df = pd.DataFrame(df)
