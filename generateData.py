@@ -82,9 +82,20 @@ def getTeamStats(file):
     return 
 
 
+
+
+def effMetrics(file):
+    path = 'data/preprocess'
+    for contents in os.listdir(path):
+        with open(os.path.join(path, file), 'r') as f:
+            df = pd.read_csv(f)
+            print(df.head())
+    return
+
 if __name__=='__main__':
     file = 'MRegularSeasonDetailedResults.csv'
-    getTeamStats(file)
-
+    file1 = 'M_Team_games_stats.csv'
+    #getTeamStats(file)
+    effMetrics(file1)
     
     
