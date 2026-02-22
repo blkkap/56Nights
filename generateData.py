@@ -3,7 +3,7 @@ import os
 
 
 def getData(file):
-    dirName = 'data/'
+    dirName = 'data/raw/'
     for contents in os.listdir(dirName):
             with open(os.path.join(dirName, file),'r') as f:
 
