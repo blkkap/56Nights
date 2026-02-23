@@ -14,10 +14,11 @@ def getSeasonStats(file):
                     avgNetRtg = ('NetRtg', 'mean'),
                     avgeFG = ('eFG%', 'mean'),
                     avgTOV = ('TOV%', 'mean'),
-                    avgReb = ('Reb%', 'mean')
-                    #Win% =
+                    avgReb = ('Reb%', 'mean'),
+                    AvgWin = ('Win' , 'mean') 
                     )
             season_stats.to_csv('data/preprocess/M_Team_season_stats.csv')
+
             print(season_stats.head())
 
     return
