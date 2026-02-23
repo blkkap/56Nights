@@ -59,17 +59,17 @@ def getTeamStats(file):
                     })
 
                 team_games = pd.concat([winners,losers], ignore_index=True)
-                '''
-                Uncommenting this will get the poss_opp for each row but since they are ~similiar we can just use the
-                curr row poss for each future calculation
+            
+               # Uncommenting this will get the poss_opp for each row but since they are ~similiar we can just use the
+               # curr row poss for each future calculation
                 team_games = pd.merge(
                         team_games,
-                        team_games[['Seasons', 'DayNum', 'TeamID', 'OppID', 'Poss']],
-                        left_on=['Season', 'DayNum', 'TeamID', 'OppID']
-                        right_on=['Season', 'DayNum', 'OppID', 'TeamID']
+                        team_games[['Season', 'DayNum', 'TeamID', 'OppID', 'Poss', 'DR', 'OR']],
+                        left_on=['Season', 'DayNum', 'TeamID', 'OppID'],
+                        right_on=['Season', 'DayNum', 'OppID', 'TeamID'],
                         suffixes=('','_opp')
                 )
-                '''
+            
                 team_games.to_csv('data/preprocess/M_Team_games_stats.csv', index=False)
 
     df = pd.DataFrame(df)
@@ -89,6 +89,16 @@ def effMetrics(file):
     for contents in os.listdir(path):
         with open(os.path.join(path, file), 'r') as f:
             df = pd.read_csv(f)
+
+            df['OffRtg'] = df['PointsFor'] / df['Poss']
+            df['DefRtg'] = df['PointsAgainst'] / df['Poss_opp']
+            df['NetRtg'] = df['OffRtg'] - df['DefRtg']
+            df['eFG%'] = (df['FGM'] + 0.5 * df['FGM3']) / df['FGA'] 
+            df['TOV%'] = df['TO'] / df['Poss']
+            df['Reb%'] = (df['OR'] + df['DR']) / (df['OR'] + df['DR'] + df['OR_opp'] + df['DR_opp'])  
+
+
+            df.to_csv('data/preprocess/M_Team_games_stats.csv', index=False)
             print(df.head())
     return
 
