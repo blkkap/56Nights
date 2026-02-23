@@ -15,10 +15,15 @@ def getSeasonStats(file):
                     avgeFG = ('eFG%', 'mean'),
                     avgTOV = ('TOV%', 'mean'),
                     avgReb = ('Reb%', 'mean'),
-                    AvgWin = ('Win' , 'mean')
+                    AvgWin = ('Win' , 'mean'),
+                    PointsFor = ('PointsFor', 'sum'),
+                    PointsAgainst = ('PointsAgainst', 'sum')
+                    )
+            season_stats['Margin'] = (
+                    season_stats['PointsFor'] - season_stats['PointsAgainst']
                     )
             season_stats.to_csv('data/preprocess/M_Team_season_stats.csv')
-
+            
             print(season_stats.head())
 
     return
