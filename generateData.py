@@ -8,14 +8,14 @@ def getSeasonStats(file):
     for contents in os.listdir(dirName):
         with open(os.path.join(dirName, file), 'r') as f:
             df = pd.read_csv(f)
-            season_stats = df.groupby(['Season', 'TeamID']).agg(
+            season_stats = df.groupby(['Season', 'TeamID'], as_index=False).agg(
                     avgOffRtg = ('OffRtg', 'mean'),
                     avgDefRtg = ('DefRtg', 'mean'),
                     avgNetRtg = ('NetRtg', 'mean'),
                     avgeFG = ('eFG%', 'mean'),
                     avgTOV = ('TOV%', 'mean'),
                     avgReb = ('Reb%', 'mean'),
-                    AvgWin = ('Win' , 'mean') 
+                    AvgWin = ('Win' , 'mean')
                     )
             season_stats.to_csv('data/preprocess/M_Team_season_stats.csv')
 
