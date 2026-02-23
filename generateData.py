@@ -3,6 +3,27 @@ import numpy as np
 import os
 
 
+def getSeasonStats(file):
+    dirName = 'data/preprocess/'
+    for contents in os.listdir(dirName):
+        with open(os.path.join(dirName, file), 'r') as f:
+            df = pd.read_csv(f)
+            season_stats = df.groupby(['Season', 'TeamID']).agg(
+                    avgOffRtg = ('OffRtg', 'mean'),
+                    avgDefRtg = ('DefRtg', 'mean'),
+                    avgNetRtg = ('NetRtg', 'mean'),
+                    avgeFG = ('eFG%', 'mean'),
+                    avgTOV = ('TOV%', 'mean'),
+                    avgReb = ('Reb%', 'mean')
+                    #Win% =
+                    )
+            season_stats.to_csv('data/preprocess/M_Team_season_stats.csv')
+            print(season_stats.head())
+
+    return
+
+
+
 def getTeamStats(file):
     dirName = 'data/raw/'
     for contents in os.listdir(dirName):
@@ -83,9 +104,8 @@ def getTeamStats(file):
 
 
 
-
 def effMetrics(file):
-    path = 'data/preprocess'
+    path = 'data/preprocess/'
     for contents in os.listdir(path):
         with open(os.path.join(path, file), 'r') as f:
             df = pd.read_csv(f)
@@ -105,7 +125,9 @@ def effMetrics(file):
 if __name__=='__main__':
     file = 'MRegularSeasonDetailedResults.csv'
     file1 = 'M_Team_games_stats.csv'
+    # STEP 1
     #getTeamStats(file)
-    effMetrics(file1)
-    
+    #effMetrics(file1)
+    # STEP 2
+    getSeasonStats(file1)
     
