@@ -39,7 +39,7 @@
   - Win%
   - Avg Margin (PointsFor - PointsAgainst)
 - Season Stats / One row per team per season 
-
+  - Get the avg for each team for that whole season
 # Step 3 Rankings
 - MMasseyOrdinals
 - RankingDayNum = 134 - 1
