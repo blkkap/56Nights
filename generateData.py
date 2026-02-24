@@ -4,9 +4,9 @@ import os
 
 
 def getSeasonStats(file):
-    dirName = 'data/preprocess/'
-    for contents in os.listdir(dirName):
-        with open(os.path.join(dirName, file), 'r') as f:
+    path = 'data/preprocess/'
+    for contents in os.listdir(path):
+        with open(os.path.join(path, file), 'r') as f:
             df = pd.read_csv(f)
             season_stats = df.groupby(['Season', 'TeamID'], as_index=False).agg(
                     avgOffRtg = ('OffRtg', 'mean'),
@@ -27,13 +27,31 @@ def getSeasonStats(file):
             print(season_stats.head())
 
     return
+'''
+def getRankings(file, file2):
+    path = 'data/raw/'
+    #for file in os.listdir(path):
+    with open(os.path.join(path, file), 'r') as f:
+        df = pd.read_csv(f)
+        ranking_stats = df.groupby(['Season', 'TeamID'], as_index=False).combine('RankingDayNum')
+        ranking_stats.to_csv('data/preprocess/M_Team_season_stats.csv', mode='a', index=False, header=False) 
+        #print(df.head())
+    return 
+'''
 
+def getRankings(file, file2):
+    df = pd.read_csv(f'data/preprocess/{file}') #main
+    df1 = pd.read_csv(f'data/raw/{file2}') #Col to add
 
+    df1_subset = df1[['Season', 'TeamID','RankingDayNum']]
+
+    ranking_stats = df.merge(df1_subset,  on=['Season','TeamID'],how='left')
+    ranking_stats.to_csv('data/preprocess/M_Team_season_stats.csv')
 
 def getTeamStats(file):
-    dirName = 'data/raw/'
-    for contents in os.listdir(dirName):
-            with open(os.path.join(dirName, file),'r') as f:
+    path = 'data/raw/'
+    for contents in os.listdir(path):
+            with open(os.path.join(path, file),'r') as f:
 
                 df = pd.read_csv(f)
                 winners = pd.DataFrame({
@@ -128,12 +146,16 @@ def effMetrics(file):
             print(df.head())
     return
 
+
 if __name__=='__main__':
     file = 'MRegularSeasonDetailedResults.csv'
     file1 = 'M_Team_games_stats.csv'
+    fileB = 'MMasseyOrdinals.csv'
+    fileA = 'M_Team_season_stats.csv'
     # STEP 1
     #getTeamStats(file)
     #effMetrics(file1)
     # STEP 2
     getSeasonStats(file1)
-    
+    # STEP 3
+    #getRankings(fileA,fileB)
