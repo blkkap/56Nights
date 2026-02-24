@@ -151,12 +151,18 @@ def effMetrics(file):
     return
 
 
-def getTourneyStats(file):
-    path = 'data/raw/'
-    with open(os.path.join(path, file), 'r') as f:
-        df = pd.read_csv(f)
-        print(df.head())
-    return
+def getTourneyStats(file1, file2):
+    df1 = pd.read_csv(f'data/raw/{file1}')
+    df2 = pd.read_csv(f'data/preprocess/{file2}')
+
+    mergedSeeds = df1[['Season', 'TeamID', 'Seed']]
+    Seeds = df2.merge(mergedSeeds, on=['Season', 'TeamID'], how='left')
+    Seeds.to_csv(f'data/preprocess/{file2}', index=False)
+    def cleanData():
+        df = pd.read_csv(f'data/preprocess/{file2}')
+        df['Seed']= df['Seed'].fillna('20')
+        return df.to_csv(f'data/preprocess/{file2}')
+    return cleanData()
 
 if __name__=='__main__':
     file = 'MRegularSeasonDetailedResults.csv'
@@ -168,7 +174,7 @@ if __name__=='__main__':
     #getTeamStats(file)
     #effMetrics(file1)
     # STEP 2
-    #getSeasonStats(file1)
+    getSeasonStats(file1)
     # STEP 3
     #getRankings(fileA,fileB)
-    getTourneyStats(file2)
+    getTourneyStats(file2, fileA)
