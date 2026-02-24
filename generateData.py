@@ -161,6 +161,7 @@ def getTourneyStats(file1, file2):
     def cleanData():
         df = pd.read_csv(f'data/preprocess/{file2}')
         df['Seed']= df['Seed'].fillna('20')
+        df['Seed'] = df['Seed'].str.replace('\D','', regex=True)
         return df.to_csv(f'data/preprocess/{file2}')
     return cleanData()
 
@@ -177,4 +178,5 @@ if __name__=='__main__':
     getSeasonStats(file1)
     # STEP 3
     #getRankings(fileA,fileB)
+    # STEP 4
     getTourneyStats(file2, fileA)
