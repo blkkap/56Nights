@@ -162,7 +162,7 @@ def getTourneyStats(file1, file2):
         df = pd.read_csv(f'data/preprocess/{file2}')
         df['Seed']= df['Seed'].fillna('20')
         df['Seed'] = df['Seed'].str.replace('\D','', regex=True)
-        return df.to_csv(f'data/preprocess/{file2}')
+        return df.to_csv(f'data/preprocess/{file2}', index=False)
     return cleanData()
 
 if __name__=='__main__':
