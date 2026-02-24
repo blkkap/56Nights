@@ -40,7 +40,7 @@
   - Avg Margin (PointsFor - PointsAgainst)
 - Season Stats / One row per team per season 
   - Get the avg for each team for that whole season
-# Step 3 Rankings
+# Step 3 Rankings  (Come back to this)
 - MMasseyOrdinals
 - RankingDayNum = 134 - 1 filter 133
 - Ordinal Ranking to calculate the match up diff for future DS

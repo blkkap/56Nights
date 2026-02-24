@@ -8,7 +8,7 @@ def getSeasonStats(file):
     for contents in os.listdir(path):
         with open(os.path.join(path, file), 'r') as f:
             df = pd.read_csv(f)
-            season_stats = df.groupby(['Season', 'TeamID'], as_index=False).agg(
+            season_stats = df.groupby(['Season', 'TeamID']).agg(
                     avgOffRtg = ('OffRtg', 'mean'),
                     avgDefRtg = ('DefRtg', 'mean'),
                     avgNetRtg = ('NetRtg', 'mean'),
@@ -27,6 +27,7 @@ def getSeasonStats(file):
             print(season_stats.head())
 
     return
+
 '''
 def getRankings(file, file2):
     path = 'data/raw/'
@@ -42,11 +43,14 @@ def getRankings(file, file2):
 def getRankings(file, file2):
     df = pd.read_csv(f'data/preprocess/{file}') #main
     df1 = pd.read_csv(f'data/raw/{file2}') #Col to add
+    
+    filtered_stats = df1[df1['RankingDayNum'] == 133]
+    filtered_stats = filtered_stats[['Season', 'TeamID','RankingDayNum', 'OrdinalRank']]
 
-    df1_subset = df1[['Season', 'TeamID','RankingDayNum']]
+    ranking_stats = df.merge(filtered_stats, on=['Season','TeamID'],how='left')
 
-    ranking_stats = df.merge(df1_subset,  on=['Season','TeamID'],how='left')
     ranking_stats.to_csv('data/preprocess/M_Team_season_stats.csv')
+ 
 
 def getTeamStats(file):
     path = 'data/raw/'
@@ -147,15 +151,24 @@ def effMetrics(file):
     return
 
 
+def getTourneyStats(file):
+    path = 'data/raw/'
+    with open(os.path.join(path, file), 'r') as f:
+        df = pd.read_csv(f)
+        print(df.head())
+    return
+
 if __name__=='__main__':
     file = 'MRegularSeasonDetailedResults.csv'
     file1 = 'M_Team_games_stats.csv'
     fileB = 'MMasseyOrdinals.csv'
     fileA = 'M_Team_season_stats.csv'
+    file2 = 'MNCAATourneySeeds.csv'
     # STEP 1
     #getTeamStats(file)
     #effMetrics(file1)
     # STEP 2
-    getSeasonStats(file1)
+    #getSeasonStats(file1)
     # STEP 3
     #getRankings(fileA,fileB)
+    getTourneyStats(file2)
