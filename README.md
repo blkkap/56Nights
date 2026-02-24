@@ -42,7 +42,8 @@
   - Get the avg for each team for that whole season
 # Step 3 Rankings
 - MMasseyOrdinals
-- RankingDayNum = 134 - 1
+- RankingDayNum = 134 - 1 filter 133
+- Ordinal Ranking to calculate the match up diff for future DS
   - Merge this into Season Stats
   - 2 Rows : Efficiency and Ranking
 
