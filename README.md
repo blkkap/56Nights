@@ -59,7 +59,10 @@
 - Identify both teams
 - Pull season Stats
 - Lower Team = Team1 :: Higher Team = Team2
-  - Groupby season and teamid to pull stats from team season : (this may need to change) 
+  - Groupby season and teamid to pull stats from team season : (this may need to change)
+    - First pull from TourneyDetailRes Marking lower TeamID with team1 higher TeamID with team2 and target based off WScore Vs. LScore
+    - Target = who won if lower mark 1 else 0
+  - Find way to pull stats from season stats 
   - We need to create all matchups
   - look at the team with the lowest teamID and mark them team1 higher teamID with team2
   - Calculate diff based off each team stats
@@ -119,10 +122,17 @@
 - Generate all 2026 tean pairs
 - Compute feature diff
 - Predict Prob 
+- Clean data:
+  - Decimal place 3-4
+  - Round last digit only (Normal rounding)
 
 
 
 
 
+# TODO List Based Dates:
 
- 
+## Feb 25, 26
+- Create new file that cleans all csv files
+  - Rounding by 3-4 decimals
+- Create more Features

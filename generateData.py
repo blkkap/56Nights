@@ -63,7 +63,45 @@ def getMatchups(file):
             'Target': np.where((df['WTeamID'] < df['LTeamID']),1, 0)
             })
         matchups.to_csv('data/preprocess/Team_Matchups.csv', index=False)
+
+        def matchupStats():
+            df1 = pd.read_csv('data/preprocess/M_Team_season_stats.csv')
+            df2 = pd.read_csv('data/preprocess/Team_Matchups.csv')
+
+            teamAStats = df2.merge(
+                    df1,
+                    left_on = ['Season', 'TeamA'],
+                    right_on = ['Season', 'TeamID'],
+                    how = 'left',
+                    suffixes = ('','_TeamA')
+                    )
+
+            teamBStats = teamAStats.merge(
+                    df1,
+                    left_on = ['Season', 'TeamB'],
+                    right_on = ['Season', 'TeamID'],
+                    how = 'left',
+                    suffixes = ('', '_TeamB')
+                    )
+
+            #teamAStats = teamAStats.drop(columns=['TeamID'])
+            teamBStats = teamBStats.drop(columns=['TeamID','PointsFor','PointsAgainst','TeamID_TeamB',
+                                                  'PointsFor_TeamB','PointsAgainst_TeamB'])
+            teamBStats = teamBStats.rename(columns={
+                'avgOffRtg': 'avgOffRtg_TeamA',
+                'avgDefRtg': 'avgDefRtg_TeamA',
+                'avgNetRtg': 'avgNetRtg_TeamA',
+                'avgeFG': 'avgeFG_TeamA',
+                'avgTOV': 'avgTOV_TeamA',
+                'avgReb': 'avgReb_TeamA',
+                'AvgWin': 'AvgWin_TeamA',
+                'Margin': 'Margin_TeamA',
+                'Seed': 'Seed_TeamA'
+                })
+            teamBStats.to_csv('data/preprocess/Team_Matchups.csv', index=False)
+
         print(df.head())
+    return matchupStats()
 
 
 def getTeamStats(file):
