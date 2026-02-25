@@ -58,7 +58,8 @@ def getMatchups(file):
         df = pd.read_csv(f)
         matchups = pd.DataFrame({
             'TeamA': np.where((df['WTeamID'] < df['LTeamID']),df['WTeamID'],df['LTeamID']),
-            'TeamB': np.where((df['WTeamID'] > df['LTeamID']), df['WTeamID'], df['LTeamID'])
+            'TeamB': np.where((df['WTeamID'] > df['LTeamID']), df['WTeamID'], df['LTeamID']),
+            'Target': np.where((df['WTeamID'] < df['LTeamID']),1, 0)
             })
         matchups.to_csv('data/preprocess/Team_Matchups.csv', index=False)
         print(df.head())
