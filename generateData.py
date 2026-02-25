@@ -98,6 +98,12 @@ def getMatchups(file):
                 'Margin': 'Margin_TeamA',
                 'Seed': 'Seed_TeamA'
                 })
+            
+            teamBStats['OffRtgDIff'] = teamBStats['avgOffRtg_TeamA'] - teamBStats['avgOffRtg_TeamB'] 
+            teamBStats['DefRtgDiff'] = teamBStats['avgDefRtg_TeamA'] - teamBStats['avgDefRtg_TeamB']
+            teamBStats['NetRtgDiff'] = teamBStats['avgNetRtg_TeamA'] - teamBStats['avgNetRtg_TeamB']
+            teamBStats['eFGDiff'] = teamBStats['avgeFG_TeamA'] - teamBStats['avgeFG_TeamB']
+            teamBStats['SeedDiff'] = teamBStats['Seed_TeamA'] - teamBStats['Seed_TeamB']
             teamBStats.to_csv('data/preprocess/Team_Matchups.csv', index=False)
 
         print(df.head())
