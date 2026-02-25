@@ -57,6 +57,7 @@ def getMatchups(file):
     with open(os.path.join(dirName, file), 'r') as f:
         df = pd.read_csv(f)
         matchups = pd.DataFrame({
+            'Season': df['Season'],
             'TeamA': np.where((df['WTeamID'] < df['LTeamID']),df['WTeamID'],df['LTeamID']),
             'TeamB': np.where((df['WTeamID'] > df['LTeamID']), df['WTeamID'], df['LTeamID']),
             'Target': np.where((df['WTeamID'] < df['LTeamID']),1, 0)
