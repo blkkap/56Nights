@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import os
+import numpy as np 
 
 
 def getSeasonStats(file):
@@ -55,7 +56,13 @@ def getMatchups(file):
     dirName = 'data/raw/'
     with open(os.path.join(dirName, file), 'r') as f:
         df = pd.read_csv(f)
+        matchups = pd.DataFrame({
+            'TeamA': np.where((df['WTeamID'] < df['LTeamID']),df['WTeamID'],df['LTeamID']),
+            'TeamB': np.where((df['WTeamID'] > df['LTeamID']), df['WTeamID'], df['LTeamID'])
+            })
+        matchups.to_csv('data/preprocess/Team_Matchups.csv', index=False)
         print(df.head())
+
 
 def getTeamStats(file):
     path = 'data/raw/'
