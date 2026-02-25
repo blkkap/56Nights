@@ -50,7 +50,12 @@ def getRankings(file, file2):
     ranking_stats = df.merge(filtered_stats, on=['Season','TeamID'],how='left')
 
     ranking_stats.to_csv('data/preprocess/M_Team_season_stats.csv')
- 
+
+def getMatchups(file):
+    dirName = 'data/raw/'
+    with open(os.path.join(dirName, file), 'r') as f:
+        df = pd.read_csv(f)
+        print(df.head())
 
 def getTeamStats(file):
     path = 'data/raw/'
@@ -171,12 +176,15 @@ if __name__=='__main__':
     fileB = 'MMasseyOrdinals.csv'
     fileA = 'M_Team_season_stats.csv'
     file2 = 'MNCAATourneySeeds.csv'
+    file3 = 'MNCAATourneyDetailedResults.csv'
     # STEP 1
     #getTeamStats(file)
     #effMetrics(file1)
     # STEP 2
-    getSeasonStats(file1)
+    #getSeasonStats(file1)
     # STEP 3
     #getRankings(fileA,fileB)
     # STEP 4
-    getTourneyStats(file2, fileA)
+    #getTourneyStats(file2, fileA)
+    # STEP 5
+    getMatchups(file3)

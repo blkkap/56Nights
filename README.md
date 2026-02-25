@@ -59,7 +59,13 @@
 - Identify both teams
 - Pull season Stats
 - Lower Team = Team1 :: Higher Team = Team2
+  - Groupby season and teamid to pull stats from team season 
+  - We need to create all matchups
+  - look at the team with the lowest teamID and mark them team1 higher teamID with team2
+  - Calculate diff based off each team stats
+  - Create new Target col if team1 won mark 1 else 0 -> team2
 
+ 
 - Create more Features
   - OffRtgDiff
   - DefRtgDiff
