@@ -133,6 +133,6 @@
 # TODO List Based Dates:
 
 ## Feb 25, 26
-- Create new file that cleans all csv files
-  - Rounding by 3-4 decimals
-- Create more Features
+- Create new file that cleans all csv files : Complete
+  - Rounding by 3-4 decimals : Complete
+- Create more Features : Complete

@@ -231,13 +231,13 @@ if __name__=='__main__':
     file2 = 'MNCAATourneySeeds.csv'
     file3 = 'MNCAATourneyDetailedResults.csv'
     # STEP 1
-    #getTeamStats(file)
-    #effMetrics(file1)
+    getTeamStats(file)
+    effMetrics(file1)
     # STEP 2
-    #getSeasonStats(file1)
+    getSeasonStats(file1)
     # STEP 3
     #getRankings(fileA,fileB)
     # STEP 4
-    #getTourneyStats(file2, fileA)
+    getTourneyStats(file2, fileA)
     # STEP 5
     getMatchups(file3)
