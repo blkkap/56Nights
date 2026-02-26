@@ -30,7 +30,7 @@ def getTrainTest(df, train_season, test_season):
 
 class BasketballNN(nn.module):
     def __init__(self, inputsize):
-        super().__init__():
+        super().__init__()
             self.layers = nn.Sequential(
                 nn.Linear(inputsize, 64),
                 nn.ReLU(),
