@@ -102,8 +102,12 @@ def getMatchups(file):
             teamBStats['OffRtgDIff'] = teamBStats['avgOffRtg_TeamA'] - teamBStats['avgOffRtg_TeamB'] 
             teamBStats['DefRtgDiff'] = teamBStats['avgDefRtg_TeamA'] - teamBStats['avgDefRtg_TeamB']
             teamBStats['NetRtgDiff'] = teamBStats['avgNetRtg_TeamA'] - teamBStats['avgNetRtg_TeamB']
+            teamBStats['TOVDiff'] = teamBStats['avgTOV_TeamA'] - teamBStats['avgTOV_TeamB']
+            teamBStats['RebDiff'] = teamBStats['avgReb_TeamA'] - teamBStats['avgReb_TeamB']
             teamBStats['eFGDiff'] = teamBStats['avgeFG_TeamA'] - teamBStats['avgeFG_TeamB']
             teamBStats['SeedDiff'] = teamBStats['Seed_TeamA'] - teamBStats['Seed_TeamB']
+            teamBStats['WinDiff'] = teamBStats['AvgWin_TeamA'] - teamBStats['AvgWin_TeamB']
+            teamBStats['MarginDiff'] = teamBStats['Margin_TeamA'] - teamBStats['Margin_TeamB']
             teamBStats.to_csv('data/preprocess/Team_Matchups.csv', index=False)
 
         print(df.head())
@@ -231,13 +235,13 @@ if __name__=='__main__':
     file2 = 'MNCAATourneySeeds.csv'
     file3 = 'MNCAATourneyDetailedResults.csv'
     # STEP 1
-    getTeamStats(file)
-    effMetrics(file1)
+    #getTeamStats(file)
+    #effMetrics(file1)
     # STEP 2
-    getSeasonStats(file1)
+    #getSeasonStats(file1)
     # STEP 3
     #getRankings(fileA,fileB)
     # STEP 4
-    getTourneyStats(file2, fileA)
+    #getTourneyStats(file2, fileA)
     # STEP 5
     getMatchups(file3)

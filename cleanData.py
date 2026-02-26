@@ -34,7 +34,10 @@ def cleanCSV2(file):
             'OffRtgDIff': 4,
             'DefRtgDiff': 4 ,
             'NetRtgDiff': 4,
-            'eFGDiff' : 4
+            'TOVDiff': 4,
+            'RebDiff': 4,
+            'eFGDiff' : 4,
+            'WinDiff' : 4
             })
         df.to_csv(f'data/preprocess/{file}', index=False)
 
@@ -59,6 +62,6 @@ if __name__=='__main__':
     file2 = 'Team_Matchups.csv'
     file3 = 'M_Team_games_stats.csv'
     
-    cleanCSV1(file1)
+    #cleanCSV1(file1)
     cleanCSV2(file2)
-    cleanCSV3(file3)
+    #cleanCSV3(file3)
