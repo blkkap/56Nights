@@ -1,31 +1,25 @@
 import torch
 import torch.nn as nn
-from torch.utils.data import Dataset, TensorDataset, DataLoader
-import os
+from torch.utils.data import TensorDataset, DataLoader
 import pandas as pd
-
 
 df = pd.read_csv('../data/preprocess/Team_Matchups.csv')
 
-X = ['NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDiff']
-y = ['Target']
+features = ['NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDiff']
+target = 'Target'
 
 
-
-def getTrainTest(df, train_season, test_season):
-    train_season = list(range(2003,2013))
-    test_season = 2013
-    train_df = df[df['Season'].isin(train_season)]
+def getTrainTest(df, train_seasons, test_season):
+    train_df = df[df['Season'].isin(train_seasons)]
     test_df = df[df['Season'] == test_season]
 
-    X_train = torch.tensor(train_df[X].values, dtype=torch.float32)
-    y_train = torch.tensor(train_df[y].values, dtype=torch.float32)
+    X_train = torch.tensor(train_df[features].values, dtype=torch.float32)
+    y_train = torch.tensor(train_df[target].values, dtype=torch.float32)
 
-    X_test = torch.tensor(test_df[X].values, dtype=torch.float32)
-    y_test = torch.tensor(test_df[y].values, dtype=torch.float32)
+    X_test = torch.tensor(test_df[features].values, dtype=torch.float32)
+    y_test = torch.tensor(test_df[target].values, dtype=torch.float32)
 
     return X_train, y_train, X_test, y_test
-
 
 
 class BasketballNN(nn.Module):
@@ -38,33 +32,34 @@ class BasketballNN(nn.Module):
             nn.ReLU(),
             nn.Linear(32,1),
             nn.Sigmoid()
-            )
+        )
 
     def forward(self, x):
         return self.layers(x)
 
 
-
-
-def trainModel(model, X_train, y_train, lr=0.01, epochs=50):
+def trainModel(model, X_train, y_train, device, lr=0.01, epochs=50):
     criterion = nn.BCELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+
+    X_train = X_train.to(device)
+    y_train = y_train.to(device)
 
     dataset = TensorDataset(X_train, y_train)
     loader = DataLoader(dataset, batch_size=32, shuffle=True)
 
     for epoch in range(epochs):
-        for x,y in loader:
-            x = x.to(device)
-            y = y.to(device)
+        for xb, yb in loader:
             optimizer.zero_grad()
-            pred = model(x).squeeze()
-            loss = criterion(pred,y)
+            pred = model(xb).squeeze()
+            loss = criterion(pred, yb)
             loss.backward()
             optimizer.step()
+
     return model
 
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 allSeasons = df['Season'].unique()
 res = {}
@@ -72,19 +67,15 @@ res = {}
 for testSeason in allSeasons:
     train_seasons = [s for s in allSeasons if s != testSeason]
 
-    X_train, y_train, X_test, y_test = getTrainTest(df,train_season, testSeason)
-    
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    model = BasketballNN(len(X)).to(device)
+    X_train, y_train, X_test, y_test = getTrainTest(df, train_seasons, testSeason)
 
-    model = trainModel(model, X_train, y_train)
+    model = BasketballNN(len(features)).to(device)
+    model = trainModel(model, X_train, y_train, device)
 
+    model.eval()
     with torch.no_grad():
-        preds = model(X_test.to(device)).round()
-        acc = (preds.squeeze() == y_test).float().mean().item()
+        preds = model(X_test.to(device)).squeeze().round()
+        acc = (preds.cpu() == y_test).float().mean().item()
         res[testSeason] = acc
 
 print(res)
-
-
-
