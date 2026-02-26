@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-import torch.utils.data import Dataset, TensorDataset
+from torch.utils.data import Dataset, TensorDataset
 import os
 import pandas as pd
 
