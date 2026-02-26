@@ -9,6 +9,10 @@ features = ['NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','Mar
 target = 'Target'
 
 
+print(df.isna().sum())
+
+print(df.describe())
+
 def getTrainTest(df, train_seasons, test_season):
     train_df = df[df['Season'].isin(train_seasons)]
     test_df = df[df['Season'] == test_season]
@@ -38,6 +42,9 @@ class BasketballNN(nn.Module):
         return self.layers(x)
 
 
+
+
+
 def trainModel(model, X_train, y_train, device, lr=0.01, epochs=50):
     criterion = nn.BCELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
@@ -46,7 +53,7 @@ def trainModel(model, X_train, y_train, device, lr=0.01, epochs=50):
     y_train = y_train.to(device)
 
     dataset = TensorDataset(X_train, y_train)
-    loader = DataLoader(dataset, batch_size=32, shuffle=True)
+    loader = DataLoader(dataset, batch_size=64, shuffle=True)
 
     for epoch in range(epochs):
         for xb, yb in loader:
@@ -60,6 +67,7 @@ def trainModel(model, X_train, y_train, device, lr=0.01, epochs=50):
 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+#device = torch.device('cpu')
 
 allSeasons = df['Season'].unique()
 res = {}
