@@ -58,9 +58,9 @@ def cleanCSV3(file):
 
 
 if __name__=='__main__':
-    file1 = 'M_Team_season_stats.csv'
-    file2 = 'Team_Matchups.csv'
-    file3 = 'M_Team_games_stats.csv'
+    file1 = 'W_Team_season_stats.csv'
+    file2 = 'W_Team_Matchups.csv'
+    file3 = 'W_Team_games_stats.csv'
     
     #cleanCSV1(file1)
     cleanCSV2(file2)
