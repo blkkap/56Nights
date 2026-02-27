@@ -7,7 +7,7 @@ from sklearn.metrics import log_loss
 
 df = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
 
-features = ['NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDiff']
+features = ['NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDiff','EloDiff']
 target = 'Target'
 
 df = df.dropna()
@@ -39,7 +39,7 @@ class BasketballNN(nn.Module):
         return self.layers(x)
 
 
-def trainModel(model, X_train, y_train, device, lr=0.001, epochs=50):
+def trainModel(model, X_train, y_train, device, lr=0.001, epochs=100):
     criterion = nn.BCEWithLogitsLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=1e-4)
 
