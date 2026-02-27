@@ -41,7 +41,7 @@ class BasketballNN(nn.Module):
 
 def trainModel(model, X_train, y_train, device, lr=0.001, epochs=50):
     criterion = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+    optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=1e-4)
 
     X_train = X_train.to(device)
     y_train = y_train.to(device)
@@ -66,8 +66,9 @@ allSeasons = sorted(df['Season'].unique())
 acc_results = {}
 logloss_results = {}
 
-for i,testSeason in enumerate(allSeasons[1:]):
-    train_seasons = allSeasons[:i+1]
+for i in range(3,len(allSeasons[1:])):
+    testSeason = allSeasons[i]
+    train_seasons = allSeasons[:i]
     X_train, y_train, X_test, y_test = getTrainTest(df, train_seasons, testSeason)
 
     model = BasketballNN(len(features)).to(device)
