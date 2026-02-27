@@ -4,14 +4,15 @@ from torch.utils.data import TensorDataset, DataLoader
 import pandas as pd
 import numpy as np
 from sklearn.metrics import log_loss
-
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
 df = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
 
 features = ['NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDiff','EloDiff']
 target = 'Target'
 
 df = df.dropna()
-
+df[features] = scaler.fit_transform(df[features])
 def getTrainTest(df, train_seasons, test_season):
     train_df = df[df['Season'].isin(train_seasons)]
     test_df = df[df['Season'] == test_season]
@@ -30,10 +31,8 @@ class BasketballNN(nn.Module):
         self.layers = nn.Sequential(
             nn.Linear(inputsize, 64),
             nn.ReLU(),
-            nn.Dropout(0.2),
             nn.Linear(64, 32),
             nn.ReLU(),
-            nn.Dropout(0.2),
             nn.Linear(32, 1)
         )
 
@@ -54,7 +53,7 @@ def trainModel(model, X_train, y_train, device, lr=0.001, epochs=100):
     for epoch in range(epochs):
         for xb, yb in loader:
             optimizer.zero_grad()
-            logits = model(xb).squeeze()
+            logits = model(xb).squeeze(1)
             loss = criterion(logits, yb)
             loss.backward()
             optimizer.step()
