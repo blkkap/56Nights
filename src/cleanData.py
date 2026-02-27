@@ -33,6 +33,7 @@ def cleanCSV2(file):
             'avgReb_HigherTeamID': 4,
             'AvgWin_HigherTeamID': 4,
             'Elo_HigherTeamID': 0,
+            'EloDiff': 0,
             'OffRtgDIff': 4,
             'DefRtgDiff': 4 ,
             'NetRtgDiff': 4,
