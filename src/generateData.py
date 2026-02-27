@@ -285,7 +285,7 @@ if __name__=='__main__':
     # STEP 5
     getMatchups(file3)
 
-
+#need to get elo
 
 
 
