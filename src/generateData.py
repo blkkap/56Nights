@@ -20,6 +20,8 @@ def getSeasonStats(file):
                     PointsFor = ('PointsFor', 'sum'),
                     PointsAgainst = ('PointsAgainst', 'sum')
                     )
+            season_stats['Elo'] = season_stats.apply(
+                    lambda row: elos[row.name[0]].get(row.name[1], 1500), axis=1)
             season_stats['Margin'] = (
                     season_stats['PointsFor'] - season_stats['PointsAgainst']
                     )
@@ -28,6 +30,38 @@ def getSeasonStats(file):
             print(season_stats.head())
 
     return
+
+
+
+def getElo(file, k=20, base=1500):
+    df = pd.read_csv(f'../data/preprocess/{file}')
+    
+
+    final_elos = {}
+
+    for season in df['Season'].unique():
+        season_games = df[df['Season'] == season]
+        season_elos = {}
+
+        for _, row in season_games.iterrows():
+            w = row['WTeamID']
+            l = row['LTeamID']
+
+            if w not in season_elos:
+                season_elos[w] = base
+            if l not in season_elos:
+                season_elos[l] = base
+
+            Ra = season_elos[w]
+            Rb = season_elos[l]
+
+            expected = 1 / (1 + 10 ** ((Rb - Ra) / 400))
+            
+            season_elos[w] = Ra + k * (win - expected)
+            season_elos[l] = Rb + k * (0 - (1 - expected))
+        final_elos[season] = season_elos
+    return final_elos
+
 
 '''
 def getRankings(file, file2):
@@ -82,6 +116,9 @@ def getMatchups(file):
                     right_on = ['Season', 'TeamID'],
                     how = 'left',
                     suffixes = ('', '_HigherTeamID')
+                    )
+            teamBStats['EloDiff'] = (
+                        teamBStats['Elo_lowerTeamID'] - teamBStats['Elo_higherTeamID']
                     )
 
             #teamAStats = teamAStats.drop(columns=['TeamID'])
@@ -235,16 +272,18 @@ if __name__=='__main__':
     file2 = 'MNCAATourneySeeds.csv'
     file3 = 'MNCAATourneyDetailedResults.csv'
     # STEP 1
-    #getTeamStats(file)
-    #effMetrics(file1)
+    getTeamStats(file)
+    effMetrics(file1)
+
+    elo = getElo(file)
     # STEP 2
-    #getSeasonStats(file1)
+    getSeasonStats(elo)
     # STEP 3
     #getRankings(fileA,fileB)
     # STEP 4
-    #getTourneyStats(file2, fileA)
+    getTourneyStats(file2, fileA)
     # STEP 5
-    #getMatchups(file3)
+    getMatchups(file3)
 
 
 
@@ -257,8 +296,8 @@ if __name__=='__main__':
     Wfile3 = 'WNCAATourneyDetailedResults.csv' 
 
 
-    getTeamStats(Wfile)
-    effMetrics(Wfile1)
-    getSeasonStats(Wfile1)
-    getTourneyStats(Wfile2, WfileA)
-    getMatchups(Wfile3)
+    #getTeamStats(Wfile)
+    #effMetrics(Wfile1)
+    #getSeasonStats(Wfile1)
+    #getTourneyStats(Wfile2, WfileA)
+    #getMatchups(Wfile3)
