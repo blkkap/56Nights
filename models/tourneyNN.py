@@ -30,8 +30,10 @@ class BasketballNN(nn.Module):
         self.layers = nn.Sequential(
             nn.Linear(inputsize, 64),
             nn.ReLU(),
+            nn.Dropout(0.2),
             nn.Linear(64, 32),
             nn.ReLU(),
+            nn.Dropout(0.2),
             nn.Linear(32, 1)
         )
 
@@ -66,7 +68,7 @@ allSeasons = sorted(df['Season'].unique())
 acc_results = {}
 logloss_results = {}
 
-for i in range(3,len(allSeasons[1:])):
+for i in range(3,len(allSeasons)):
     testSeason = allSeasons[i]
     train_seasons = allSeasons[:i]
     X_train, y_train, X_test, y_test = getTrainTest(df, train_seasons, testSeason)
