@@ -66,9 +66,8 @@ allSeasons = sorted(df['Season'].unique())
 acc_results = {}
 logloss_results = {}
 
-for testSeason in allSeasons:
-    train_seasons = [s for s in allSeasons if s != testSeason]
-
+for i,testSeason in enumerate(allSeasons[1:]):
+    train_seasons = allSeasons[:i+1]
     X_train, y_train, X_test, y_test = getTrainTest(df, train_seasons, testSeason)
 
     model = BasketballNN(len(features)).to(device)
