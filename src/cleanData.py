@@ -8,7 +8,7 @@ def cleanCSV1(file):
     with open(os.path.join(path, file), 'r') as f:
         df = pd.read_csv(f)
         print(df.avgOffRtg.dtypes)
-        df = df.round({'avgOffRtg': 4, 'avgDefRtg': 4, 'avgNetRtg': 4, 'avgeFG': 4, 'avgTOV': 4, 'avgReb': 4, 'AvgWin': 4})
+        df = df.round({'avgOffRtg': 4, 'avgDefRtg': 4, 'avgNetRtg': 4, 'avgeFG': 4, 'avgTOV': 4, 'avgReb': 4, 'AvgWin': 4, 'Elo': 0})
 
         df.to_csv(f'../data/preprocess/{file}', index=False) 
         print(df.head())
@@ -24,6 +24,7 @@ def cleanCSV2(file):
             'avgTOV_LowerTeamID': 4,
             'avgReb_LowerTeamID': 4,
             'AvgWin_LowerTeamID': 4,
+            'Elo_LowerTeamID': 0,
             'avgOffRtg_HigherTeamID': 4,
             'avgDefRtg_HigherTeamID': 4,
             'avgNetRtg_HigherTeamID': 4,
@@ -31,6 +32,7 @@ def cleanCSV2(file):
             'avgTOV_HigherTeamID': 4,
             'avgReb_HigherTeamID': 4,
             'AvgWin_HigherTeamID': 4,
+            'Elo_HigherTeamID': 0,
             'OffRtgDIff': 4,
             'DefRtgDiff': 4 ,
             'NetRtgDiff': 4,
@@ -62,6 +64,6 @@ if __name__=='__main__':
     file2 = 'W_Team_Matchups.csv'
     file3 = 'W_Team_games_stats.csv'
     
-    #cleanCSV1(file1)
+    cleanCSV1(file1)
     cleanCSV2(file2)
-    #cleanCSV3(file3)
+    cleanCSV3(file3)

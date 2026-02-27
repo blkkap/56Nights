@@ -12,7 +12,7 @@ def mergeMatchups(file, file2):
 
 
 if __name__=='__main__':
-    file1 = 'Team_Matchups.csv'
+    file1 = 'M_Team_Matchups.csv'
     file2 = 'W_Team_Matchups.csv'
 
     mergeMatchups(file1, file2)
