@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 from sklearn.metrics import log_loss
 from sklearn.preprocessing import StandardScaler
+
 scaler = StandardScaler()
 df = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
 
@@ -31,8 +32,10 @@ class BasketballNN(nn.Module):
         self.layers = nn.Sequential(
             nn.Linear(inputsize, 64),
             nn.ReLU(),
+            nn.Dropout(0.2),
             nn.Linear(64, 32),
             nn.ReLU(),
+            nn.Dropout(0.2),    
             nn.Linear(32, 1)
         )
 
@@ -40,7 +43,7 @@ class BasketballNN(nn.Module):
         return self.layers(x)
 
 
-def trainModel(model, X_train, y_train, device, lr=0.001, epochs=100):
+def trainModel(model, X_train, y_train, device, lr=5e-4, epochs=100):
     criterion = nn.BCEWithLogitsLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=1e-4)
 
@@ -67,7 +70,7 @@ allSeasons = sorted(df['Season'].unique())
 acc_results = {}
 logloss_results = {}
 
-for i in range(3,len(allSeasons)):
+for i in range(4,len(allSeasons)):   #Inital value: 3
     testSeason = allSeasons[i]
     train_seasons = allSeasons[:i]
     X_train, y_train, X_test, y_test = getTrainTest(df, train_seasons, testSeason)
