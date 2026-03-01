@@ -6,6 +6,15 @@ import numpy as np
 from sklearn.metrics import log_loss
 from sklearn.preprocessing import StandardScaler
 
+
+#Parameters
+BATCH_SIZE = 256
+LR = 5e-4
+WEIGHT_DECAY = 1e-4 
+EPOCHS = 100 
+
+
+
 scaler = StandardScaler()
 df = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
 
@@ -43,15 +52,15 @@ class BasketballNN(nn.Module):
         return self.layers(x)
 
 
-def trainModel(model, X_train, y_train, device, lr=5e-4, epochs=100):
+def trainModel(model, X_train, y_train, device, lr=LR, epochs=EPOCHS):
     criterion = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=1e-4)
+    optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=WEIGHT_DECAY)
 
     X_train = X_train.to(device)
     y_train = y_train.to(device)
 
     dataset = TensorDataset(X_train, y_train)
-    loader = DataLoader(dataset, batch_size=256, shuffle=True)
+    loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
 
     for epoch in range(epochs):
         for xb, yb in loader:
@@ -110,3 +119,29 @@ final_model = BasketballNN(len(features)).to(device)
 final_model = trainModel(final_model, X_full, y_full, device)
 
 final_model.eval()
+
+
+
+
+import sys
+import os
+o = sys.stdout
+path = '../logs/'
+
+with open(os.path.join(path, 'logs.txt'), 'a') as f:
+    sys.stdout = f
+    print("-----------Start of the log------------")
+    print("\nAcc per season:")
+    print(acc_results)
+
+    print("\nLog Loss per season:")
+    print(logloss_results)
+    print("\nAvg Accuracy:" , np.mean(list(acc_results.values())))
+    print("\nAvg Log loss:", np.mean(list(logloss_results.values())))
+
+    print("\nParameters used for current iteration:")
+    print("LR:", LR)
+    print("epochs:", EPOCHS)
+    print("Batch size:", BATCH_SIZE)
+    print("Weight decay:", WEIGHT_DECAY)
+    print("----------End of iteration---------------")
