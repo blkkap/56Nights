@@ -12,7 +12,7 @@ BATCH_SIZE = 256
 LR = 5e-4
 WEIGHT_DECAY = 1e-4 
 EPOCHS = 100 
-
+SHUFFLE = False
 
 
 scaler = StandardScaler()
@@ -60,7 +60,7 @@ def trainModel(model, X_train, y_train, device, lr=LR, epochs=EPOCHS):
     y_train = y_train.to(device)
 
     dataset = TensorDataset(X_train, y_train)
-    loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
+    loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=SHUFFLE)
 
     for epoch in range(epochs):
         for xb, yb in loader:
@@ -144,4 +144,5 @@ with open(os.path.join(path, 'logs.txt'), 'a') as f:
     print("epochs:", EPOCHS)
     print("Batch size:", BATCH_SIZE)
     print("Weight decay:", WEIGHT_DECAY)
+    print("Shuffle:", SHUFFLE)
     print("----------End of iteration---------------")
