@@ -13,7 +13,7 @@ LR = 5e-4
 WEIGHT_DECAY = 1e-4 
 EPOCHS = 100 
 SHUFFLE = False
-
+LOSS = nn.BCEWithLogitsLoss()
 
 scaler = StandardScaler()
 df = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
@@ -44,7 +44,7 @@ class BasketballNN(nn.Module):
             nn.Dropout(0.2),
             nn.Linear(64, 32),
             nn.ReLU(),
-            nn.Dropout(0.2),    
+            nn.Dropout(0.2),
             nn.Linear(32, 1)
         )
 
@@ -53,7 +53,7 @@ class BasketballNN(nn.Module):
 
 
 def trainModel(model, X_train, y_train, device, lr=LR, epochs=EPOCHS):
-    criterion = nn.BCEWithLogitsLoss()
+    criterion = LOSS
     optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=WEIGHT_DECAY)
 
     X_train = X_train.to(device)
@@ -120,7 +120,7 @@ final_model = trainModel(final_model, X_full, y_full, device)
 
 final_model.eval()
 
-
+torch.save(final_model.state_dict(), '../Nets/MM_model.pth')
 
 
 import sys
@@ -145,4 +145,5 @@ with open(os.path.join(path, 'logs.txt'), 'a') as f:
     print("Batch size:", BATCH_SIZE)
     print("Weight decay:", WEIGHT_DECAY)
     print("Shuffle:", SHUFFLE)
+    print("Loss:", LOSS)
     print("----------End of iteration---------------")
