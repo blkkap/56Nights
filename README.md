@@ -87,7 +87,9 @@
   - Validate on 2023
 - Better Strat
   - Leave on season out cross val
-    - 2010-2015 Val on 2017
+    - 03-25  : 23 seasons total
+    - train on : 04-12 -> test on : 03
+    - train on : 03, 05-12 -> test on : 04
 
 
 
@@ -136,3 +138,7 @@
 - Create new file that cleans all csv files : Complete
   - Rounding by 3-4 decimals : Complete
 - Create more Features : Complete
+
+
+## Mar 2, 26
+- Create last csv with 500k rows for testing
