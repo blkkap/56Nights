@@ -23,13 +23,13 @@ def subCSV(file1,file2,file3):
 
 if __name__=='__main__':
     file1 = 'SampleSubmissionStage1.csv'
-    file2 = 'merged_team_matchups.csv'
+    file2 = 'M_Team_season_stats.csv'
     file3 = 'W_Team_season_stats.csv' 
 
     subCSV(file1,file2,file3)
 
 
-
+# Which csv to use, game or season stats? 
 
 
 
