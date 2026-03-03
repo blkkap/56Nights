@@ -8,6 +8,7 @@ def subCSV(file1,file2):
     sample['Season'] = sample['Season'].astype(int)
     sample['Team1'] = sample['Team1'].astype(int)
     sample['Team2'] = sample['Team2'].astype(int)
+    sample.drop(columns=['ID', 'Pred'])
     sample.to_csv('../data/preprocess/sampleSub.csv', index=False)
     #with open(os.path.join(path1,file1), 'r') as f:
     print(sample.head())
