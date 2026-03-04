@@ -55,6 +55,17 @@ def subCSV(file1,file2,file3):
     sample['WinDiff'] = sample['AvgWin_Team1'] - sample['AvgWin_Team2']
     sample['MarginDIff'] = sample['Margin_Team1'] - sample['Margin_Team2'] 
     sample['EloDiff'] = sample['Elo_Team1'] - sample['Elo_Team2']
+
+    sample = sample.round({
+        'NetRtgDiff': 6,
+        'TOVDiff': 6,
+        'RebDiff': 6,
+        'eFGDiff': 6,
+        'SeedDiff': 6,
+        'WinDiff': 6,
+        'MarginDiff': 6,
+        'EloDiff': 6
+        })
     sample.to_csv('../data/preprocess/sampleSub.csv', index=False)
     print(sample.head())
     print(Mseason.head())

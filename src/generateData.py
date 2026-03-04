@@ -24,7 +24,7 @@ def getSeasonStats(file, elos):
         season_stats['Margin'] = (
                     season_stats['PointsFor'] - season_stats['PointsAgainst']
                     )
-        season_stats.to_csv('../data/preprocess/W_Team_season_stats.csv')
+        season_stats.to_csv('../data/preprocess/M_Team_season_stats.csv')
             
         print(season_stats.head())
 
@@ -95,11 +95,11 @@ def getMatchups(file):
             'HigherTeamID': np.where((df['WTeamID'] > df['LTeamID']), df['WTeamID'], df['LTeamID']),
             'Target': np.where((df['WTeamID'] < df['LTeamID']),1, 0)
             })
-        matchups.to_csv('../data/preprocess/W_Team_Matchups.csv', index=False)
+        matchups.to_csv('../data/preprocess/M_Team_Matchups.csv', index=False)
 
         def matchupStats():
-            df1 = pd.read_csv('../data/preprocess/W_Team_season_stats.csv')
-            df2 = pd.read_csv('../data/preprocess/W_Team_Matchups.csv')
+            df1 = pd.read_csv('../data/preprocess/M_Team_season_stats.csv')
+            df2 = pd.read_csv('../data/preprocess/M_Team_Matchups.csv')
 
             teamAStats = df2.merge(
                     df1,
@@ -145,7 +145,7 @@ def getMatchups(file):
             teamBStats['SeedDiff'] = teamBStats['Seed_LowerTeamID'] - teamBStats['Seed_HigherTeamID']
             teamBStats['WinDiff'] = teamBStats['AvgWin_LowerTeamID'] - teamBStats['AvgWin_HigherTeamID']
             teamBStats['MarginDiff'] = teamBStats['Margin_LowerTeamID'] - teamBStats['Margin_HigherTeamID']
-            teamBStats.to_csv('../data/preprocess/W_Team_Matchups.csv', index=False)
+            teamBStats.to_csv('../data/preprocess/M_Team_Matchups.csv', index=False)
 
         print(df.head())
     return matchupStats()
@@ -218,7 +218,7 @@ def getTeamStats(file):
                         suffixes=('','_opp')
                 )
             
-                team_games.to_csv('../data/preprocess/W_Team_games_stats.csv', index=False)
+                team_games.to_csv('../data/preprocess/M_Team_games_stats.csv', index=False)
 
     df = pd.DataFrame(df)
     num_rows = len(df.index)
@@ -245,7 +245,7 @@ def effMetrics(file):
             df['Reb%'] = (df['OR'] + df['DR']) / (df['OR'] + df['DR'] + df['OR_opp'] + df['DR_opp'])  
 
 
-            df.to_csv('../data/preprocess/W_Team_games_stats.csv', index=False)
+            df.to_csv('../data/preprocess/M_Team_games_stats.csv', index=False)
             print(df.head())
     return
 
@@ -272,18 +272,18 @@ if __name__=='__main__':
     file2 = 'MNCAATourneySeeds.csv'
     file3 = 'MNCAATourneyDetailedResults.csv'
     # STEP 1
-    #getTeamStats(file)
-    #effMetrics(file1)
+    getTeamStats(file)
+    effMetrics(file1)
 
-    #elo = getElo(file)
+    elo = getElo(file)
     # STEP 2
-    #getSeasonStats(file1, elo)
+    getSeasonStats(file1, elo)
     # STEP 3
     #getRankings(fileA,fileB)
     # STEP 4
-    #getTourneyStats(file2, fileA)
+    getTourneyStats(file2, fileA)
     # STEP 5
-    #getMatchups(file3)
+    getMatchups(file3)
 
 #need to get elo
 
@@ -296,9 +296,9 @@ if __name__=='__main__':
     Wfile3 = 'WNCAATourneyDetailedResults.csv' 
 
 
-    getTeamStats(Wfile)
-    effMetrics(Wfile1)
-    elo = getElo(Wfile)
-    getSeasonStats(Wfile1, elo)
-    getTourneyStats(Wfile2, WfileA)
-    getMatchups(Wfile3)
+    #getTeamStats(Wfile)
+    #effMetrics(Wfile1)
+    #elo = getElo(Wfile)
+    #getSeasonStats(Wfile1, elo)
+    #getTourneyStats(Wfile2, WfileA)
+    #getMatchups(Wfile3)
