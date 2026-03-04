@@ -22,12 +22,12 @@ scaler.fit(train_df[features])
 scaler = joblib.load('../Nets/scaler.pkl')
 df[features] = scaler.transform(df[features])
 
-X_test = torch.tensor(df[features].values(), dtype=torch.float32).to(device)
+X_test = torch.tensor(df[features].values, dtype=torch.float32).to(device)
 
 class BasketballNN(nn.Module):
     def __init__(self, inputsize):
         super().__init__()
-        self.layers = nn.Sequnetial(
+        self.layers = nn.Sequential(
             nn.Linear(inputsize, 64),
             nn.ReLU(),
             nn.Dropout(0.2),
@@ -42,7 +42,7 @@ class BasketballNN(nn.Module):
 
 
 model = BasketballNN(len(features)).to(device)
-model.load_state_dict(torch.load('../Nets/MM_model.pth', map_loaction=device))
+model.load_state_dict(torch.load('../Nets/MM_model.pth', map_location=device))
 model.eval()
 
 
