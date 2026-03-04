@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 from sklearn.metrics import log_loss
 from sklearn.preprocessing import StandardScaler
-
+import joblib
 
 #Parameters
 BATCH_SIZE = 256
@@ -119,7 +119,7 @@ final_model = BasketballNN(len(features)).to(device)
 final_model = trainModel(final_model, X_full, y_full, device)
 
 final_model.eval()
-
+joblib.dump(scaler, '../Nets/scaler.pkl')
 torch.save(final_model.state_dict(), '../Nets/MM_model.pth')
 
 

@@ -3,11 +3,11 @@ import torch.nn as nn
 import pandas as pd
 import numpy as np 
 from sklearn.preprocessing import StandardScaler
+import joblib
 
 
-
-features = ['NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDIff','EloDiff']
-device = torch.device('cuda' if torch.cuda.is_avaliable() else 'cpu')
+features = ['NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDiff','EloDiff']
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 
 df = pd.read_csv('../data/preprocess/sampleSub.csv')
@@ -19,11 +19,12 @@ train_df = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
 train_df = train_df.dropna()
 scaler.fit(train_df[features])
 
+scaler = joblib.load('../Nets/scaler.pkl')
 df[features] = scaler.transform(df[features])
 
 X_test = torch.tensor(df[features].values(), dtype=torch.float32).to(device)
 
-Class BasketballNN(nn.Module):
+class BasketballNN(nn.Module):
     def __init__(self, inputsize):
         super().__init__()
         self.layers = nn.Sequnetial(
