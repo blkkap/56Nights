@@ -53,7 +53,7 @@ def subCSV(file1,file2,file3):
     sample['eFGDiff'] = sample['avgeFG_Team1'] - sample['avgeFG_Team2']
     sample['SeedDiff'] = sample['Seed_Team1'] - sample['Seed_Team2']
     sample['WinDiff'] = sample['AvgWin_Team1'] - sample['AvgWin_Team2']
-    sample['MarginDIff'] = sample['Margin_Team1'] - sample['Margin_Team2'] 
+    sample['MarginDiff'] = sample['Margin_Team1'] - sample['Margin_Team2'] 
     sample['EloDiff'] = sample['Elo_Team1'] - sample['Elo_Team2']
 
     sample = sample.round({
