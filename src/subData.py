@@ -28,8 +28,8 @@ def subCSV(file1,file2,file3):
     
     
        
-    
-    sample = sample.drop(columns=['ID', 'Pred'])
+    # Dont drop cols will need these for sub file
+    #sample = sample.drop(columns=['ID', 'Pred'])
     sample = sample.rename(columns = {
         'TeamID' : 'TeamID_Team1',
         'avgOffRtg' : 'avgOffRtg_Team1',
@@ -47,7 +47,14 @@ def subCSV(file1,file2,file3):
     })
 
     # Generate Diff
-
+    sample['NetRtgDiff'] = sample['avgNetRtg_Team1'] - sample['avgNetRtg_Team2']
+    sample['TOVDiff'] = sample['avgTOV_Team1'] - sample['avgTOV_Team2']
+    sample['RebDiff'] = sample['avgReb_Team1'] - sample['avgReb_Team2']
+    sample['eFGDiff'] = sample['avgeFG_Team1'] - sample['avgeFG_Team2']
+    sample['SeedDiff'] = sample['Seed_Team1'] - sample['Seed_Team2']
+    sample['WinDiff'] = sample['AvgWin_Team1'] - sample['AvgWin_Team2']
+    sample['MarginDIff'] = sample['Margin_Team1'] - sample['Margin_Team2'] 
+    sample['EloDiff'] = sample['Elo_Team1'] - sample['Elo_Team2']
     sample.to_csv('../data/preprocess/sampleSub.csv', index=False)
     print(sample.head())
     print(Mseason.head())
