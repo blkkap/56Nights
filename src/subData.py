@@ -9,9 +9,40 @@ def subCSV(file1,file2,file3):
     sample['Season'] = sample['Season'].astype(int)
     sample['Team1'] = sample['Team1'].astype(int)
     sample['Team2'] = sample['Team2'].astype(int)
-    sample.drop(columns=['ID', 'Pred'])
+    season_all = pd.concat([Mseason, Wseason], ignore_index=True) 
+    
+    sample = sample.merge(
+            season_all,
+            left_on = ['Season', 'Team1'],
+            right_on = ['Season', 'TeamID'],
+            how = 'left',
+            suffixes = ('', '_MTeam1')
+            )
+    sample = sample.merge(
+            season_all,
+            left_on = ['Season', 'Team2'],
+            right_on = ['Season', 'TeamID'],
+            how = 'left',
+            suffixes = ('', '_MTeam2')
+            )
+    '''
+    sample = sample.merge(
+            Wseason,
+            left_on = ['Season','Team1'],
+            right_on = ['Season', 'TeamID'],
+            how = 'left',
+            suffixes = ('', '_WTeam1')
+            )
+    sample = sample.merge(
+            Wseason,
+            left_on =['Season', 'Team2'],
+            right_on = ['Season', 'TeamID'],
+            how = 'left',
+            suffixes = ('', '_WTeam2')
+            )
+    '''         
+    #sample.drop(columns=['ID', 'Pred'])
     sample.to_csv('../data/preprocess/sampleSub.csv', index=False)
-    #with open(os.path.join(path1,file1), 'r') as f:
     print(sample.head())
     print(Mseason.head())
     print(Wseason.head())
