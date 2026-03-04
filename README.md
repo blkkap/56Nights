@@ -142,3 +142,12 @@
 
 ## Mar 2, 26
 - Create last csv with 500k rows for testing
+  - create same Diffs as testing Features
+    - NetRtgDiff
+    - TOVDiff
+    - RebDiff
+    - eFGDiff
+    - SeedDiff
+    - WinDiff 
+    - MarginDiff
+    - EloDiff
