@@ -7,6 +7,9 @@ from sklearn.metrics import log_loss
 from sklearn.preprocessing import StandardScaler
 import joblib
 
+from xgboost import XGBClassifier
+from sklearn.metrics import log_loss
+
 #Parameters
 BATCH_SIZE = 256
 LR = 5e-4
@@ -34,7 +37,7 @@ def getTrainTest(df, train_seasons, test_season):
     y_test = torch.tensor(test_df[target].values, dtype=torch.float32)
 
     return X_train, y_train, X_test, y_test
-
+'''
 class BasketballNN(nn.Module):
     def __init__(self, inputsize):
         super().__init__()
@@ -50,7 +53,28 @@ class BasketballNN(nn.Module):
 
     def forward(self, x):
         return self.layers(x)
+'''
+NESTIMATOR = 1500
+MAXDEPTH = 4
+LR = 1
+OBJ = 'binary:logistic'
+SUBSAMPLE = 0.8
+COLSAMPLEBYTREE = 0.8 
+EVALMETRICS = 'logloss'
+RANDOMSTATE = 42
+TREEMETHOD = 'hist'
 
+model = XGBClassifier(
+        n_esitmator = NESTIMATOR, 
+        max_depth = MAXDEPTH,
+        learning_rate = LR,
+        objective = OBJ,
+        subsample = SUBSAMPLE,
+        colsample_bytree = COLSAMPLEBYTREE,
+        eval_metrics = EVALMETRICS,
+        random_state = RANDOMSTATE,
+        tree_method = TREEMETHOD
+        )
 
 def trainModel(model, X_train, y_train, device, lr=LR, epochs=EPOCHS):
     criterion = LOSS
