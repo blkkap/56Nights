@@ -16,32 +16,38 @@ def subCSV(file1,file2,file3):
             left_on = ['Season', 'Team1'],
             right_on = ['Season', 'TeamID'],
             how = 'left',
-            suffixes = ('', '_MTeam1')
+            suffixes = ('', '_Team1')
             )
     sample = sample.merge(
             season_all,
             left_on = ['Season', 'Team2'],
             right_on = ['Season', 'TeamID'],
             how = 'left',
-            suffixes = ('', '_MTeam2')
+            suffixes = ('', '_Team2')
             )
-    '''
-    sample = sample.merge(
-            Wseason,
-            left_on = ['Season','Team1'],
-            right_on = ['Season', 'TeamID'],
-            how = 'left',
-            suffixes = ('', '_WTeam1')
-            )
-    sample = sample.merge(
-            Wseason,
-            left_on =['Season', 'Team2'],
-            right_on = ['Season', 'TeamID'],
-            how = 'left',
-            suffixes = ('', '_WTeam2')
-            )
-    '''         
-    #sample.drop(columns=['ID', 'Pred'])
+    
+    
+       
+    
+    sample = sample.drop(columns=['ID', 'Pred'])
+    sample = sample.rename(columns = {
+        'TeamID' : 'TeamID_Team1',
+        'avgOffRtg' : 'avgOffRtg_Team1',
+        'avgDefRtg' : 'avgDefRtg_Team1',
+        'avgNetRtg' : 'avgNetRtg_Team1',
+        'avgeFG' : 'avgeFG_Team1' ,
+        'avgTOV' : 'avgTOV_Team1' ,
+        'avgReb' : 'avgReb_Team1' ,
+        'AvgWin' : 'AvgWin_Team1' ,
+        'PointsFor' : 'PointsFor_Team1',
+        'PointsAgainst' : 'PointsAgainst_Team1',
+        'Elo' : 'Elo_Team1',
+        'Margin' : 'Margin_Team1',
+        'Seed' : 'Seed_Team1'
+    })
+
+    # Generate Diff
+
     sample.to_csv('../data/preprocess/sampleSub.csv', index=False)
     print(sample.head())
     print(Mseason.head())
