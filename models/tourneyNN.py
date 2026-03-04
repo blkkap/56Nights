@@ -12,7 +12,7 @@ BATCH_SIZE = 256
 LR = 5e-4
 WEIGHT_DECAY = 1e-4 
 EPOCHS = 100 
-SHUFFLE = False
+SHUFFLE = True
 LOSS = nn.BCEWithLogitsLoss()
 
 scaler = StandardScaler()
