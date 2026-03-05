@@ -151,3 +151,15 @@
     - WinDiff 
     - MarginDiff
     - EloDiff
+
+
+
+## Mar 4, 26
+- XGBoost 
+- Add more features
+  - SeedDiff
+  - EloDiff * abs(SeedDiff)
+  - Elo_Team1
+  - Elo_Team2
+  - EloDiffSQUARED
+- More based on research 

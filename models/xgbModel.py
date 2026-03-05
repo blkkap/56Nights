@@ -16,7 +16,7 @@ df = df.dropna()
 allSeasons = sorted(df['Season'].unique())
 
 logloss_res = {}
-for i in range(4, len(allSeasons)):
+for i in range(3, len(allSeasons)):
     testSeason = allSeasons[i]
     train_seasons = allSeasons[:i]
 
@@ -30,8 +30,8 @@ for i in range(4, len(allSeasons)):
     y_test = test_df[target]
 
 
-    NESTIMATOR = 1500
-    MAXDEPTH = 4
+    NESTIMATOR= 1000
+    MAXDEPTH = 3 
     LR = 0.01
     OBJ = 'binary:logistic'
     SUBSAMPLE = 0.8
@@ -39,19 +39,20 @@ for i in range(4, len(allSeasons)):
     EVALMETRICS = 'logloss'
     RANDOMSTATE = 42
     TREEMETHOD = 'hist'
-
+    EARLYSTOPPINGROUNDS = 100
     model = XGBClassifier(
-            n_esitmator = NESTIMATOR,
+            n_estimators = NESTIMATOR,
             max_depth = MAXDEPTH,
             learning_rate = LR,
             objective = OBJ,
             subsample = SUBSAMPLE,
             colsample_bytree = COLSAMPLEBYTREE,
-            eval_metrics = EVALMETRICS,
+            eval_metric = EVALMETRICS,
             random_state = RANDOMSTATE,
-            tree_method = TREEMETHOD
+            tree_method = TREEMETHOD,
+            early_stopping_rounds=EARLYSTOPPINGROUNDS
         )
-    model.fit(X_train, y_train)
+    model.fit(X_train, y_train, eval_set=[(X_test,y_test)])
     preds = model.predict_proba(X_test)[:, 1]
     LL = log_loss(y_test, preds)
 
