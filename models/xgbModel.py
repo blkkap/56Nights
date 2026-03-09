@@ -30,7 +30,7 @@ for i in range(3, len(allSeasons)):
     y_test = test_df[target]
 
 
-    NESTIMATOR= 1000
+    NESTIMATOR= 1500
     MAXDEPTH = 3 
     LR = 0.01
     OBJ = 'binary:logistic'
@@ -50,7 +50,7 @@ for i in range(3, len(allSeasons)):
             eval_metric = EVALMETRICS,
             random_state = RANDOMSTATE,
             tree_method = TREEMETHOD,
-            early_stopping_rounds=EARLYSTOPPINGROUNDS
+            #early_stopping_rounds=EARLYSTOPPINGROUNDS
         )
     model.fit(X_train, y_train, eval_set=[(X_test,y_test)])
     preds = model.predict_proba(X_test)[:, 1]
