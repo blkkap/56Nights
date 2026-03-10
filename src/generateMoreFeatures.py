@@ -14,7 +14,7 @@ def moreFeatures(file):
         - Elo_LowerTeam1
         - Elo_HigherTeam2
         - Seed_LowerTeam1
-        -  Seed_higherTeam2 
+        - Seed_higherTeam2 
         Need to calculate
         - Elo * abs(SeedDiff)
         - EloDiffSQRD
@@ -29,3 +29,13 @@ def moreFeatures(file):
 if __name__=='__main__':
     file = ('merged_team_matchups.csv')
     moreFeatures(file)
+
+
+
+
+
+'''
+LifeSAVER:
+    git fetch origin main
+    git reset --hard FETCH_HEAD
+'''
