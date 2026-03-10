@@ -13,16 +13,15 @@ def moreFeatures(file):
         - SeedDiff
         - Elo_LowerTeam1
         - Elo_HigherTeam2
-        
+        - Seed_LowerTeam1
+        -  Seed_higherTeam2 
         Need to calculate
         - Elo * abs(SeedDiff)
         - EloDiffSQRD
-        - SeedSum
-        - Seed_LowerTeam1
-        - Seed_higherTeam2
+        - SeedSum- 
         '''
 
-
+    pass
 
 
 
