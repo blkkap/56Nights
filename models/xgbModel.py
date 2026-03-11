@@ -9,7 +9,7 @@ import pandas as pd
 
 df = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
 
-features = ['NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDiff','EloDiff']
+features = ['NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','Seed_LowerTeamID','Seed_HigherTeamID','WinDiff','MarginDiff','EloDiff','Elo_LowerTeamID','Elo_HigherTeamID']
 target = 'Target'
 
 df = df.dropna()
