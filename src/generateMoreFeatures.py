@@ -21,7 +21,9 @@ def moreFeatures(file):
         - SeedSum- 
     '''
     df['interaction'] = df['EloDiff'] * np.absolute(df['SeedDiff'])
-    
+    df['ESQUARE'] = np.square(df['EloDiff']) 
+    df['SeedGap'] = np.absolute(df['SeedDiff'])
+    df['EloGap'] = np.absolute(df['EloDiff'])
     df.to_csv(f'{path}merged_team_matchups.csv', index=False)
 
 
