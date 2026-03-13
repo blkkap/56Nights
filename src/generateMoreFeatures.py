@@ -1,15 +1,15 @@
 import os
 import pandas as pd
-
+import numpy as np
 
 def moreFeatures(file):
     path = '../data/preprocess/'
-
-    with open(os.path.join(path,file), 'r') as f:
-        df = pd.read_csv(f)
-        print(df.head())
-        '''
-        We already have majority of new features needed
+    df = pd.read_csv(f'{path}merged_team_matchups.csv')
+    #with open(os.path.join(path,file), 'r') as f:
+        #df = pd.read_csv(f)
+        #print(df.head())
+    '''
+    We already have majority of new features needed
         - SeedDiff
         - Elo_LowerTeam1
         - Elo_HigherTeam2
@@ -19,10 +19,10 @@ def moreFeatures(file):
         - Elo * abs(SeedDiff)
         - EloDiffSQRD
         - SeedSum- 
-        '''
-
-    pass
-
+    '''
+    df['interaction'] = df['EloDiff'] * np.absolute(df['SeedDiff'])
+    
+    df.to_csv(f'{path}merged_team_matchups.csv', index=False)
 
 
 
