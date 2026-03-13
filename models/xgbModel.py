@@ -9,7 +9,7 @@ import pandas as pd
 
 df = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
 
-features = ['NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','Seed_LowerTeamID','Seed_HigherTeamID','WinDiff','MarginDiff','EloDiff','Elo_LowerTeamID','Elo_HigherTeamID']
+features = ['NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','Seed_LowerTeamID','Seed_HigherTeamID','WinDiff','MarginDiff','EloDiff','Elo_LowerTeamID','Elo_HigherTeamID','interaction','ESQUARE']
 target = 'Target'
 
 df = df.dropna()
@@ -30,8 +30,9 @@ for i in range(3, len(allSeasons)):
     y_test = test_df[target]
 
 
-    NESTIMATOR= 1500
-    MAXDEPTH = 3 
+    NESTIMATOR= 700
+    MAXDEPTH = 2
+    #MINCHILDWEIGHT = 4 
     LR = 0.01
     OBJ = 'binary:logistic'
     SUBSAMPLE = 0.8
@@ -43,6 +44,7 @@ for i in range(3, len(allSeasons)):
     model = XGBClassifier(
             n_estimators = NESTIMATOR,
             max_depth = MAXDEPTH,
+            #min_child_weight = MINCHILDWEIGHT,
             learning_rate = LR,
             objective = OBJ,
             subsample = SUBSAMPLE,
@@ -50,7 +52,7 @@ for i in range(3, len(allSeasons)):
             eval_metric = EVALMETRICS,
             random_state = RANDOMSTATE,
             tree_method = TREEMETHOD,
-            ##early_stopping_rounds=EARLYSTOPPINGROUNDS
+            #early_stopping_rounds=EARLYSTOPPINGROUNDS
         )
     model.fit(X_train, y_train, eval_set=[(X_test,y_test)])
     preds = model.predict_proba(X_test)[:, 1]
