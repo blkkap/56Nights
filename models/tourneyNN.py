@@ -11,7 +11,7 @@ import joblib
 from sklearn.metrics import log_loss
 
 #Parameters
-BATCH_SIZE = 128
+BATCH_SIZE = 256
 LR = 5e-4
 WEIGHT_DECAY = 1e-4 
 EPOCHS = 100 
@@ -21,7 +21,7 @@ LOSS = nn.BCEWithLogitsLoss()
 scaler = StandardScaler()
 df = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
 
-features = ['interaction','ESQUARE','Seed_LowerTeamID','Seed_HigherTeamID','SeedGap','EloGap','NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDiff','EloDiff']
+features = ['avgOffRtg_LowerTeamID','avgOffRtg_HigherTeamID','avgDefRtg_LowerTeamID','avgDefRtg_HigherTeamID','avgNetRtg_LowerTeamID','avgNetRtg_HigherTeamID','interaction','ESQUARE','Seed_LowerTeamID','Seed_HigherTeamID','SeedGap','EloGap','NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDiff','EloDiff']
 target = 'Target'
 
 df = df.dropna()
