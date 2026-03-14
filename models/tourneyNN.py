@@ -11,7 +11,7 @@ import joblib
 from sklearn.metrics import log_loss
 
 #Parameters
-BATCH_SIZE = 256
+BATCH_SIZE = 128
 LR = 5e-4
 WEIGHT_DECAY = 1e-4 
 EPOCHS = 100 
@@ -21,7 +21,7 @@ LOSS = nn.BCEWithLogitsLoss()
 scaler = StandardScaler()
 df = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
 
-features = ['NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDiff','EloDiff']
+features = ['interaction','ESQUARE','Seed_LowerTeamID','Seed_HigherTeamID','SeedGap','EloGap','NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDiff','EloDiff']
 target = 'Target'
 
 df = df.dropna()
@@ -44,10 +44,10 @@ class BasketballNN(nn.Module):
         self.layers = nn.Sequential(
             nn.Linear(inputsize, 64),
             nn.ReLU(),
-            nn.Dropout(0.2),
+            nn.Dropout(0.3),
             nn.Linear(64, 32),
             nn.ReLU(),
-            nn.Dropout(0.2),
+            nn.Dropout(0.3),
             nn.Linear(32, 1)
         )
 

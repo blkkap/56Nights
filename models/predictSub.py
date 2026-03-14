@@ -55,7 +55,7 @@ submission = pd.DataFrame({
     'Pred' : probs
 })
 
-submission.to_csv('../data/pred/sub.csv', index=False)
+submission.to_csv('../data/pred/sub2.csv', index=False)
 
 print('Submission completed')
 
