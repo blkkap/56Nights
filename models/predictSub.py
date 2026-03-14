@@ -10,7 +10,7 @@ features = ['NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','Mar
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 
-df = pd.read_csv('../data/preprocess/sampleSub.csv')
+df = pd.read_csv('../data/preprocess/sampleSub2.csv')
 
 ids = df['ID']
 

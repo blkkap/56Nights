@@ -2,14 +2,14 @@ import torch
 from xgboost import XGBClassifier 
 from sklearn.metrics import log_loss
 import pandas as pd
-
+import numpy as np
 
 
 
 
 df = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
 
-features = ['NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','Seed_LowerTeamID','Seed_HigherTeamID','WinDiff','MarginDiff','EloDiff','Elo_LowerTeamID','Elo_HigherTeamID','interaction','ESQUARE']
+features = ['NetRtgDiff','SeedGap','EloGap','TOVDiff','RebDiff','eFGDiff','SeedDiff','Seed_LowerTeamID','Seed_HigherTeamID','WinDiff','MarginDiff','EloDiff','Elo_LowerTeamID','Elo_HigherTeamID','interaction','ESQUARE']
 target = 'Target'
 
 df = df.dropna()
