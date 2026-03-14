@@ -66,7 +66,7 @@ def subCSV(file1,file2,file3):
         'MarginDiff': 6,
         'EloDiff': 6
         })
-    sample.to_csv('../data/preprocess/sampleSub.csv', index=False)
+    sample.to_csv('../data/preprocess/sampleSub2.csv', index=False)
     print(sample.head())
     print(Mseason.head())
     print(Wseason.head())
@@ -77,7 +77,7 @@ def subCSV(file1,file2,file3):
 
 
 if __name__=='__main__':
-    file1 = 'SampleSubmissionStage1.csv'
+    file1 = 'SampleSubmissionStage2.csv'
     file2 = 'M_Team_season_stats.csv'
     file3 = 'W_Team_season_stats.csv' 
 
