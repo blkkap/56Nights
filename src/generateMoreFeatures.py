@@ -51,11 +51,12 @@ def moreFeatures(file):
     df['OffvsDefHi'] = (df['avgOffRtg_HigherTeamID'] - df['avgDefRtg_LowerTeamID']).round(6)
     df['eFGMatchupLow'] = (df['avgeFG_LowerTeamID'] - df['avgeFG_HigherTeamID']).round(6)
     df['eFGMatchupHi'] = (df['avgeFG_HigherTeamID'] - df['avgeFG_LowerTeamID']).round(6)
-    df['MarginSTDLow'] = np.std(df['Margin_LowerTeamID']).round(6)
-    df['MarginSTDHi'] = np.std(df['Margin_HigherTeamID']).round(6) 
-    df['MarginDiffSTD'] = np.std(df['MarginDiff']).round(6)
     df['MarginSQ'] = np.square(df['MarginDiff']).round(6)
     
+    
+
+    df = df.drop(['MarginSTDLow', 'MarginSTDHi', 'MarginDiffSTD'], axis=1)
+
     df.to_csv(f'{path}merged_team_matchups.csv', index=False)
 
 

@@ -6,7 +6,9 @@ from sklearn.preprocessing import StandardScaler
 import joblib
 
 
-features = ['NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDiff','EloDiff']
+#features = ['NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDiff','EloDiff']
+
+features = ['SeedProduct','OffvsDefLow','OffvsDefHi','eFGMatchupLow','eFGMatchupHi','MarginSQ','avgOffRtg_LowerTeamID','avgOffRtg_HigherTeamID','avgDefRtg_LowerTeamID','avgDefRtg_HigherTeamID','avgNetRtg_LowerTeamID','avgNetRtg_HigherTeamID','interaction','ESQUARE','Seed_LowerTeamID','Seed_HigherTeamID','SeedGap','EloGap','NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDiff','EloDiff']
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 

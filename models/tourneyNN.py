@@ -13,13 +13,14 @@ from sklearn.metrics import log_loss
 #Parameters
 BATCH_SIZE = 256
 LR = 5e-4
-WEIGHT_DECAY = 1e-4 
+WEIGHT_DECAY = 1e-2 
 EPOCHS = 100 
 SHUFFLE = True
 LOSS = nn.BCEWithLogitsLoss()
 
 scaler = StandardScaler()
 df = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
+
 
 features = ['SeedProduct','OffvsDefLow','OffvsDefHi','eFGMatchupLow','eFGMatchupHi','MarginSQ','avgOffRtg_LowerTeamID','avgOffRtg_HigherTeamID','avgDefRtg_LowerTeamID','avgDefRtg_HigherTeamID','avgNetRtg_LowerTeamID','avgNetRtg_HigherTeamID','interaction','ESQUARE','Seed_LowerTeamID','Seed_HigherTeamID','SeedGap','EloGap','NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDiff','EloDiff']
 target = 'Target'
@@ -44,10 +45,10 @@ class BasketballNN(nn.Module):
         self.layers = nn.Sequential(
             nn.Linear(inputsize, 64),
             nn.ReLU(),
-            nn.Dropout(0.3),
+            nn.Dropout(0.2),
             nn.Linear(64, 32),
             nn.ReLU(),
-            nn.Dropout(0.3),
+            nn.Dropout(0.2),
             nn.Linear(32, 1)
         )
 
