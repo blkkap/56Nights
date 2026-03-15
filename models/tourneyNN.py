@@ -21,7 +21,7 @@ LOSS = nn.BCEWithLogitsLoss()
 scaler = StandardScaler()
 df = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
 
-features = ['avgOffRtg_LowerTeamID','avgOffRtg_HigherTeamID','avgDefRtg_LowerTeamID','avgDefRtg_HigherTeamID','avgNetRtg_LowerTeamID','avgNetRtg_HigherTeamID','interaction','ESQUARE','Seed_LowerTeamID','Seed_HigherTeamID','SeedGap','EloGap','NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDiff','EloDiff']
+features = ['SeedProduct','OffvsDefLow','OffvsDefHi','eFGMatchupLow','eFGMatchupHi','MarginSQ','avgOffRtg_LowerTeamID','avgOffRtg_HigherTeamID','avgDefRtg_LowerTeamID','avgDefRtg_HigherTeamID','avgNetRtg_LowerTeamID','avgNetRtg_HigherTeamID','interaction','ESQUARE','Seed_LowerTeamID','Seed_HigherTeamID','SeedGap','EloGap','NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDiff','EloDiff']
 target = 'Target'
 
 df = df.dropna()
@@ -111,7 +111,7 @@ print(logloss_results)
 print("\nAverage Accuracy:", np.mean(list(acc_results.values())))
 print("Average Log Loss:", np.mean(list(logloss_results.values())))
 
-
+print("Length of features:", len(features))
 print("\nTraining final model on all seasons...")
 
 X_full = torch.tensor(df[features].values, dtype=torch.float32)
