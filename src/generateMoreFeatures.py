@@ -59,13 +59,13 @@ def moreFeatures(file):
 
     df.to_csv(f'{path}merged_team_matchups.csv', index=False)
     
-    def getTemp()
+    def getTemp():
         
         file = 'M_Team_games_stats.csv'
         file1 = 'W_Team_games_stats.csv'
 
         df1 = pd.read_csv(f'../data/preprocess/{file}')
-        df2 = pd.read_csv(f'../data/preprocess/{file2}')
+        df2 = pd.read_csv(f'../data/preprocess/{file1}')
         df3 = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
         games = pd.concat([df1,df2], ignore_index=True)
         tempo = (
@@ -76,22 +76,22 @@ def moreFeatures(file):
         tempo.rename(columns={'Poss':'Tempo'}, inplace=True)
         
 
-        df = d3.merge(
+        df = df3.merge(
                 tempo,
-                left_on = ['Season', 'Lower_TeamID'],
+                left_on = ['Season', 'LowerTeamID'],
                 right_on = ['Season', 'TeamID'],
                 how='left',
-                suffixes = '','_Lower'
+                suffixes = ('','_Lower')
                 )
 
         df.drop(columns=['TeamID'], inplace=True)
 
-        df = d3.merge(
+        df = df3.merge(
                 tempo,
-                left_on = ['Season', 'Higher_TeamID'],
+                left_on = ['Season', 'HigherTeamID'],
                 right_on = ['Season', 'TeamID'],
                 how = 'left',
-                suffixes = '', '_Higher'
+                suffixes = ('', '_Higher')
                 )
         df.drop(columns=['TeamID'], inplace=True)
         
