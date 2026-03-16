@@ -22,7 +22,7 @@ scaler = StandardScaler()
 df = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
 
 
-features = ['SeedProduct','OffvsDefLow','OffvsDefHi','eFGMatchupLow','eFGMatchupHi','MarginSQ','avgOffRtg_LowerTeamID','avgOffRtg_HigherTeamID','avgDefRtg_LowerTeamID','avgDefRtg_HigherTeamID','avgNetRtg_LowerTeamID','avgNetRtg_HigherTeamID','interaction','ESQUARE','Seed_LowerTeamID','Seed_HigherTeamID','SeedGap','EloGap','NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDiff','EloDiff']
+features = ['Tempo_Lower','Tempo_Higher','TempoDiff','TempoGap','SeedProduct','OffvsDefLow','OffvsDefHi','eFGMatchupLow','eFGMatchupHi','MarginSQ','avgOffRtg_LowerTeamID','avgOffRtg_HigherTeamID','avgDefRtg_LowerTeamID','avgDefRtg_HigherTeamID','avgNetRtg_LowerTeamID','avgNetRtg_HigherTeamID','interaction','ESQUARE','Seed_LowerTeamID','Seed_HigherTeamID','SeedGap','EloGap','NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDiff','EloDiff']
 target = 'Target'
 
 df = df.dropna()
@@ -45,10 +45,10 @@ class BasketballNN(nn.Module):
         self.layers = nn.Sequential(
             nn.Linear(inputsize, 64),
             nn.ReLU(),
-            nn.Dropout(0.2),
+            nn.Dropout(0.3),
             nn.Linear(64, 32),
             nn.ReLU(),
-            nn.Dropout(0.2),
+            nn.Dropout(0.3),
             nn.Linear(32, 1)
         )
 
