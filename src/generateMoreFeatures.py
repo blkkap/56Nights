@@ -73,10 +73,9 @@ def moreFeatures(file):
                 .mean()
                 .reset_index()
                 )
-        tempo.rename(columns={'Poss':'Tempo'}, inplace=True)
-        
-
-        df = df3.merge(
+        tempo =  tempo.rename(columns={'Poss':'Tempo'})
+        print(tempo.head())
+        dff = df3.merge(
                 tempo,
                 left_on = ['Season', 'LowerTeamID'],
                 right_on = ['Season', 'TeamID'],
@@ -84,17 +83,20 @@ def moreFeatures(file):
                 suffixes = ('','_Lower')
                 )
 
-        df.drop(columns=['TeamID'], inplace=True)
+        #df = df.drop(columns=['TeamID'], inplace=True)
 
-        df = df3.merge(
+        df = dff.merge(
                 tempo,
                 left_on = ['Season', 'HigherTeamID'],
                 right_on = ['Season', 'TeamID'],
                 how = 'left',
                 suffixes = ('', '_Higher')
                 )
-        df.drop(columns=['TeamID'], inplace=True)
+        df.drop(columns=['TeamID'])
         
+        df = df.rename(columns={'Tempo': 'Tempo_Lower'})
+        print(df.head())
+
         df['TempoDiff'] = df['Tempo_Lower'] - df['Tempo_Higher']
         df['TempoGap'] = abs(df['TempoDiff'])
 
