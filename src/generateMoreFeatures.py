@@ -58,7 +58,48 @@ def moreFeatures(file):
     #df = df.drop(['MarginSTDLow', 'MarginSTDHi', 'MarginDiffSTD'], axis=1)
 
     df.to_csv(f'{path}merged_team_matchups.csv', index=False)
+    
+    def getTemp()
+        
+        file = 'M_Team_games_stats.csv'
+        file1 = 'W_Team_games_stats.csv'
 
+        df1 = pd.read_csv(f'../data/preprocess/{file}')
+        df2 = pd.read_csv(f'../data/preprocess/{file2}')
+        df3 = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
+        games = pd.concat([df1,df2], ignore_index=True)
+        tempo = (
+                games.groupby(['Season', 'TeamID'])['Poss']
+                .mean()
+                .reset_index()
+                )
+        tempo.rename(columns={'Poss':'Tempo'}, inplace=True)
+        
+
+        df = d3.merge(
+                tempo,
+                left_on = ['Season', 'Lower_TeamID'],
+                right_on = ['Season', 'TeamID'],
+                how='left',
+                suffixes = '','_Lower'
+                )
+
+        df.drop(columns=['TeamID'], inplace=True)
+
+        df = d3.merge(
+                tempo,
+                left_on = ['Season', 'Higher_TeamID'],
+                right_on = ['Season', 'TeamID'],
+                how = 'left',
+                suffixes = '', '_Higher'
+                )
+        df.drop(columns=['TeamID'], inplace=True)
+        
+        df['TempoDiff'] = df['Tempo_Lower'] - df['Tempo_Higher']
+        df['TempoGap'] = abs(df['TempoDiff'])
+
+        df.to_csv('../data/preprocess/merged_team_matchups.csv', index=False)
+    return getTemp()
 
 
 if __name__=='__main__':
