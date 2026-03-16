@@ -55,7 +55,7 @@ def moreFeatures(file):
     
     
 
-    df = df.drop(['MarginSTDLow', 'MarginSTDHi', 'MarginDiffSTD'], axis=1)
+    #df = df.drop(['MarginSTDLow', 'MarginSTDHi', 'MarginDiffSTD'], axis=1)
 
     df.to_csv(f'{path}merged_team_matchups.csv', index=False)
 
