@@ -11,7 +11,10 @@ def features(file):
 
     df['MatchupAdv'] = (df['avgOffRtg_LowerTeamID'] - df['avgDefRtg_HigherTeamID']) - (df['avgOffRtg_HigherTeamID'] - df['avgDefRtg_LowerTeamID'])
     df['NetRtgSquared'] = df['NetRtgDiff'] ** 2
-    
+    df['MarginStdDiff'] = df['MarginStd_Lower'] - df['MarginStd_Higher']
+    df['OffRtgDiff'] = df['OffRtgStd_Lower'] - df['OffRtgStd_Higher']
+
+    ''' 
     games['Margin'] = games['PointsFor'] - games['PointsAgainst']
 
     team_std = games.groupby(['Season','TeamID']).agg({
@@ -53,17 +56,18 @@ def features(file):
     
 
     print(df1.head())
-    df1.to_csv(f'../data/preprocess/{file}')
-
+    '''
+    df.to_csv(f'../data/preprocess/{file}')
+    
 
 
 
 
 if __name__=='__main__':
     file = 'merged_team_matchups.csv'
-    
+ 
     df = pd.read_csv(f'../data/preprocess/{file}')
-
+    '''
     df = df.drop(columns=[
         'MarginStd_Lower',
         'OffRtgStd_Lower',
@@ -82,6 +86,8 @@ if __name__=='__main__':
     )
     df.to_csv(f'../data/preprocess/{file}')
     print(df.head())
-
-
+    '''
+    df = df.drop(columns=['Unnamed: 0', 'Unnamed: 0.5'])
+    df.to_csv(f'../data/preprocess/{file}')
+    print(df.head())
     features(file)
