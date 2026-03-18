@@ -3,13 +3,13 @@ from xgboost import XGBClassifier
 from sklearn.metrics import log_loss
 import pandas as pd
 import numpy as np
-
-
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
 
 
 #df = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
 df = pd.read_csv('../data/preprocess/merged2.csv')
-
+'''
 features = [
         'TempoDiff',
         'OffvsDefLow',
@@ -37,6 +37,20 @@ features = [
         'StrGapABS',
         'SeedEloMismatch'
         ]
+'''
+features = [
+    'NetRtgDiff',
+    'EloDiff',
+    'SeedDiff',
+    'MarginDiff',
+    'WinDiff',
+    'OffRtgDiff',
+    'eFGDiff',
+    'TOVDiff',
+    'RebDiff',
+    'OffvsDefLow',
+    'OffvsDefHi'
+]
 target = 'Target'
 
 df = df.dropna()
@@ -92,7 +106,16 @@ for i in range(4, len(allSeasons)):
               eval_set=[(X_test,y_test)],
               verbose=VERBOSE
               )
-    preds = model.predict_proba(X_test)[:, 1]
+    preds_xgb = model.predict_proba(X_test)[:, 1]
+    
+    scaler = StandardScaler()
+    X_train_scaled = scaler.fit_transform(X_train)
+    X_test_scaled = scaler.transform(X_test)
+    lr = LogisticRegression(max_iter=1000)
+    lr.fit(X_train_scaled, y_train)
+    pred_lr = lr.predict_proba(X_test_scaled)[:,1]
+    preds = 0.6 * preds_xgb + 0.4 * pred_lr
+
     preds = np.clip(preds, 0.01, 0.99)
     LL = log_loss(y_test, preds)
 
