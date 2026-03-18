@@ -61,4 +61,12 @@ def features(file):
 
 if __name__=='__main__':
     file = 'merged_team_matchups.csv'
+    
+    df = pd.read_csv(f'../data/preprocess/{file}')
+
+    df = df.drop(columns=[
+        ''
+        ]
+
+
     features(file)
