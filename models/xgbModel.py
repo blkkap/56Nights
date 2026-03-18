@@ -9,14 +9,14 @@ import numpy as np
 
 df = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
 
-features = ['TempoDiff','TempoGap','SeedProduct','OffvsDefLow','OffvsDefHi','eFGMatchupLow','eFGMatchupHi','MarginSQ','avgOffRtg_LowerTeamID','avgOffRtg_HigherTeamID','avgDefRtg_LowerTeamID','avgDefRtg_HigherTeamID','avgNetRtg_LowerTeamID','avgNetRtg_HigherTeamID','interaction','ESQUARE','SeedGap','EloGap','NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDiff','EloDiff']
+features = ['MatchupAdv','TempoDiff','OffvsDefLow','OffvsDefHi','eFGMatchupLow','eFGMatchupHi','avgOffRtg_LowerTeamID','avgOffRtg_HigherTeamID','avgDefRtg_LowerTeamID','avgDefRtg_HigherTeamID','avgNetRtg_LowerTeamID','avgNetRtg_HigherTeamID','interaction','ESQUARE','SeedGap','EloGap','NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDiff','EloDiff']
 target = 'Target'
 
 df = df.dropna()
 allSeasons = sorted(df['Season'].unique())
 
 logloss_res = {}
-for i in range(3, len(allSeasons)):
+for i in range(4, len(allSeasons)):
     testSeason = allSeasons[i]
     train_seasons = allSeasons[:i-1]
 
@@ -30,13 +30,13 @@ for i in range(3, len(allSeasons)):
     y_test = test_df[target]
 
 
-    NESTIMATOR= 1500
-    MAXDEPTH = 4
+    NESTIMATOR= 1200
+    MAXDEPTH = 3
     MINCHILDWEIGHT = 5 
     LR = 0.02
     OBJ = 'binary:logistic'
     SUBSAMPLE = 0.8
-    COLSAMPLEBYTREE = 0.7
+    COLSAMPLEBYTREE = 0.8
     EVALMETRICS = 'logloss'
     RANDOMSTATE = 42
     TREEMETHOD = 'hist'
@@ -47,17 +47,17 @@ for i in range(3, len(allSeasons)):
     model = XGBClassifier(
             n_estimators = NESTIMATOR,
             max_depth = MAXDEPTH,
-            min_child_weight = MINCHILDWEIGHT,
+            #min_child_weight = MINCHILDWEIGHT,
             learning_rate = LR,
-            #objective = OBJ,
+            objective = OBJ,
             subsample = SUBSAMPLE,
             colsample_bytree = COLSAMPLEBYTREE,
             eval_metric = EVALMETRICS,
             random_state = RANDOMSTATE,
             tree_method = TREEMETHOD,
             #early_stopping_rounds=EARLYSTOPPINGROUNDS,
-            gamma = GAMMA,
-            reg_lambda = REG_LAMBDA
+            #gamma = GAMMA,
+            #reg_lambda = REG_LAMBDA
         )
     model.fit(X_train, y_train, 
               eval_set=[(X_test,y_test)],

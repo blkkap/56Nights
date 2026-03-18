@@ -67,6 +67,7 @@ def moreFeatures(file):
         df1 = pd.read_csv(f'../data/preprocess/{file}')
         df2 = pd.read_csv(f'../data/preprocess/{file1}')
         df3 = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
+
         games = pd.concat([df1,df2], ignore_index=True)
         tempo = (
                 games.groupby(['Season', 'TeamID'])['Poss']
@@ -99,13 +100,24 @@ def moreFeatures(file):
 
         df['TempoDiff'] = df['Tempo_Lower'] - df['Tempo_Higher']
         df['TempoGap'] = abs(df['TempoDiff'])
-
+        df = df.round({
+            'TempoDiff' : 6,
+            'TempoGap' : 6,
+            'Tempo_Lower': 6,
+            'Tempo_Higher': 6
+            })
         df.to_csv('../data/preprocess/merged_team_matchups.csv', index=False)
     return getTemp()
 
 
 if __name__=='__main__':
     file = ('merged_team_matchups.csv')
+    
+    df3 = pd.read_csv(f'../data/preprocess/{file}')
+
+    df = df3.drop(['TeamID', 'Tempo_Lower','Tempo_Higher', 'TempoDiff', 'TempoGap','TeamID_Higher'], axis=1)
+    df.to_csv(f'../data/preprocess/{file}')
+    print(df.head())
     moreFeatures(file)
 
 

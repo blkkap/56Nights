@@ -22,7 +22,39 @@ scaler = StandardScaler()
 df = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
 
 
-features = ['Tempo_Lower','Tempo_Higher','TempoDiff','TempoGap','SeedProduct','OffvsDefLow','OffvsDefHi','eFGMatchupLow','eFGMatchupHi','MarginSQ','interaction','ESQUARE','Seed_LowerTeamID','Seed_HigherTeamID','SeedGap','EloGap','NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDiff','EloDiff']
+features = [
+        'Tempo_Lower',
+        'Tempo_Higher',
+        'TempoDiff',
+        'TempoGap',
+        'SeedProduct',
+        'OffvsDefLow',
+        'OffvsDefHi',
+        'eFGMatchupLow',
+        'eFGMatchupHi',
+        'MarginSQ',
+        'interaction',
+        'ESQUARE',
+        'Seed_LowerTeamID',
+        'Seed_HigherTeamID',
+        'SeedGap',
+        'EloGap',
+        'NetRtgDiff',
+        'TOVDiff',
+        'RebDiff',
+        'eFGDiff',
+        'SeedDiff',
+        'WinDiff',
+        'MarginDiff',
+        'EloDiff',
+        'avgOffRtg_LowerTeamID',
+        'avgOffRtg_HigherTeamID',
+        'avgDefRtg_LowerTeamID',
+        'avgDefRetg_HigherTeamID',
+        'avgNetRtg_LowerTeamID',
+        'avgNetRtg_HigherTeamID',
+        'matchupAdv'
+        ]
 target = 'Target'
 
 df = df.dropna()
