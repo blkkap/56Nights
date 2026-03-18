@@ -27,10 +27,17 @@ features = [
         'avgOffRtg_LowerTeamID',
         'avgOffRtg_HigherTeamID',
         'avgDefRtg_LowerTeamID',
-        'avgDefRetg_HigherTeamID',
+        'avgDefRtg_HigherTeamID',
         'avgNetRtg_LowerTeamID',
         'avgNetRtg_HigherTeamID',
-        'MatchupAdv'
+        'MatchupAdv',
+        'NetRtgSquared',
+        'MarginStd_Lower',
+        'OffRtgStd_Lower',
+        'MarginStd_Higher',
+        'OffRtgStd_Lower',
+        'MarginStdDiff',
+        'OffRtgDiff'
         ]
 target = 'Target'
 
