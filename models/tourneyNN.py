@@ -26,7 +26,6 @@ features = [
         'TempoDiff',
         'OffvsDefLow',
         'OffvsDefHi',
-        'interaction',
         'ESQUARE',
         'SeedGap',
         'NetRtgDiff',

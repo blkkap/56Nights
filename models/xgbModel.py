@@ -7,7 +7,8 @@ import numpy as np
 
 
 
-df = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
+#df = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
+df = pd.read_csv('../data/preprocess/merged2.csv')
 
 features = [
         'TempoDiff',
@@ -27,14 +28,14 @@ features = [
         'avgDefRtg_HigherTeamID',
         'avgNetRtg_LowerTeamID',
         'avgNetRtg_HigherTeamID',
-        'MatchupAdv',
-        'NetRtgSquared',
-        'MarginStd_Lower',
-        'OffRtgStd_Lower',
-        'MarginStd_Higher',
-        'OffRtgStd_Higher',
         'MarginStdDiff',
-        'OffRtgDiff'
+        'OffRtgDiff',
+        'NetMatchup_LH',
+        'NetMatchup_HL',
+        'OffDef_Int_Str',
+        'TotStr',  
+        'StrGapABS',
+        'SeedEloMismatch'
         ]
 target = 'Target'
 
@@ -57,8 +58,8 @@ for i in range(4, len(allSeasons)):
 
 
     NESTIMATOR= 5000
-    MAXDEPTH = 4
-    MINCHILDWEIGHT = 10 
+    MAXDEPTH = 3
+    MINCHILDWEIGHT = 3
     LR = 0.02
     OBJ = 'binary:logistic'
     SUBSAMPLE = 0.8
@@ -68,7 +69,7 @@ for i in range(4, len(allSeasons)):
     TREEMETHOD = 'hist'
     EARLYSTOPPINGROUNDS = 200
     VERBOSE=True
-    GAMMA = 0.2
+    GAMMA = 0.1
     REG_LAMBDA = 2
     REG_ALPHA = 1
     model = XGBClassifier(
@@ -96,7 +97,7 @@ for i in range(4, len(allSeasons)):
     LL = log_loss(y_test, preds)
 
     logloss_res[testSeason] = LL
-
+model.save_model('../Trees/model.bin')
 print('Features count:', len(features))
 print('\nLog Loss per season:', logloss_res)
 print('\nAvg Log Loss per season:', sum(logloss_res.values())/ len(logloss_res))
