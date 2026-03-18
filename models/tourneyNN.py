@@ -23,22 +23,12 @@ df = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
 
 
 features = [
-        'Tempo_Lower',
-        'Tempo_Higher',
         'TempoDiff',
-        'TempoGap',
-        'SeedProduct',
         'OffvsDefLow',
         'OffvsDefHi',
-        'eFGMatchupLow',
-        'eFGMatchupHi',
-        'MarginSQ',
         'interaction',
         'ESQUARE',
-        'Seed_LowerTeamID',
-        'Seed_HigherTeamID',
         'SeedGap',
-        'EloGap',
         'NetRtgDiff',
         'TOVDiff',
         'RebDiff',
@@ -53,7 +43,7 @@ features = [
         'avgDefRetg_HigherTeamID',
         'avgNetRtg_LowerTeamID',
         'avgNetRtg_HigherTeamID',
-        'matchupAdv'
+        'MatchupAdv'
         ]
 target = 'Target'
 

@@ -9,7 +9,29 @@ import numpy as np
 
 df = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
 
-features = ['MatchupAdv','TempoDiff','OffvsDefLow','OffvsDefHi','eFGMatchupLow','eFGMatchupHi','avgOffRtg_LowerTeamID','avgOffRtg_HigherTeamID','avgDefRtg_LowerTeamID','avgDefRtg_HigherTeamID','avgNetRtg_LowerTeamID','avgNetRtg_HigherTeamID','interaction','ESQUARE','SeedGap','EloGap','NetRtgDiff','TOVDiff','RebDiff','eFGDiff','SeedDiff','WinDiff','MarginDiff','EloDiff']
+features = [
+        'TempoDiff',
+        'OffvsDefLow',
+        'OffvsDefHi',
+        'interaction',
+        'ESQUARE',
+        'SeedGap',
+        'NetRtgDiff',
+        'TOVDiff',
+        'RebDiff',
+        'eFGDiff',
+        'SeedDiff',
+        'WinDiff',
+        'MarginDiff',
+        'EloDiff',
+        'avgOffRtg_LowerTeamID',
+        'avgOffRtg_HigherTeamID',
+        'avgDefRtg_LowerTeamID',
+        'avgDefRetg_HigherTeamID',
+        'avgNetRtg_LowerTeamID',
+        'avgNetRtg_HigherTeamID',
+        'MatchupAdv'
+        ]
 target = 'Target'
 
 df = df.dropna()
