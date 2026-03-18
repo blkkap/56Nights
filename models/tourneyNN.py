@@ -40,10 +40,17 @@ features = [
         'avgOffRtg_LowerTeamID',
         'avgOffRtg_HigherTeamID',
         'avgDefRtg_LowerTeamID',
-        'avgDefRetg_HigherTeamID',
+        'avgDefRtg_HigherTeamID',
         'avgNetRtg_LowerTeamID',
         'avgNetRtg_HigherTeamID',
-        'MatchupAdv'
+        'MatchupAdv',
+        'NetRtgSquared',
+        'MarginStd_Lower',
+        'OffRtgStd_Lower',
+        'MarginStd_Higher',
+        'OffRtgStd_Lower',
+        'MarginStdDiff',
+        'OffRtgDiff'
         ]
 target = 'Target'
 
@@ -65,13 +72,13 @@ class BasketballNN(nn.Module):
     def __init__(self, inputsize):
         super().__init__()
         self.layers = nn.Sequential(
-            nn.Linear(inputsize, 32),
+            nn.Linear(inputsize, 128),
             nn.ReLU(),
-            nn.Dropout(0.3),
-            nn.Linear(32, 16),
+            nn.Dropout(0.2),
+            nn.Linear(128, 64),
             nn.ReLU(),
-            nn.Dropout(0.3),
-            nn.Linear(16, 1)
+            nn.Dropout(0.2),
+            nn.Linear(64, 1)
         )
 
     def forward(self, x):
