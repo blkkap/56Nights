@@ -65,8 +65,23 @@ if __name__=='__main__':
     df = pd.read_csv(f'../data/preprocess/{file}')
 
     df = df.drop(columns=[
-        ''
+        'MarginStd_Lower',
+        'OffRtgStd_Lower',
+        'MarginStd_x',
+        'OffRtgStd_x',
+        'MarginStd_y',
+        'OffRtgStd_y',
+        'MarginStd_Higher',
+        'OffRtgStd_Higher',
+        'Unnamed: 0.4',
+        'Unnamed: 0.3',
+        'Unnamed: 0.2',
+        'Unnamed: 0.1',
+        'Unnamed: 0'
         ]
+    )
+    df.to_csv(f'../data/preprocess/{file}')
+    print(df.head())
 
 
     features(file)
