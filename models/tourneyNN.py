@@ -48,7 +48,7 @@ features = [
         'MarginStd_Lower',
         'OffRtgStd_Lower',
         'MarginStd_Higher',
-        'OffRtgStd_Lower',
+        'OffRtgStd_Higher',
         'MarginStdDiff',
         'OffRtgDiff'
         ]

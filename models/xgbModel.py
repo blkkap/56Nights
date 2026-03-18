@@ -35,7 +35,7 @@ features = [
         'MarginStd_Lower',
         'OffRtgStd_Lower',
         'MarginStd_Higher',
-        'OffRtgStd_Lower',
+        'OffRtgStd_Higher',
         'MarginStdDiff',
         'OffRtgDiff'
         ]
@@ -59,8 +59,8 @@ for i in range(4, len(allSeasons)):
     y_test = test_df[target]
 
 
-    NESTIMATOR= 1200
-    MAXDEPTH = 3
+    NESTIMATOR= 1000
+    MAXDEPTH = 2
     MINCHILDWEIGHT = 5 
     LR = 0.02
     OBJ = 'binary:logistic'
@@ -85,8 +85,8 @@ for i in range(4, len(allSeasons)):
             random_state = RANDOMSTATE,
             tree_method = TREEMETHOD,
             #early_stopping_rounds=EARLYSTOPPINGROUNDS,
-            #gamma = GAMMA,
-            #reg_lambda = REG_LAMBDA
+            gamma = GAMMA,
+            reg_lambda = REG_LAMBDA
         )
     model.fit(X_train, y_train, 
               eval_set=[(X_test,y_test)],
