@@ -5,7 +5,8 @@ import pandas as pd
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
-
+from sklearn.calibration import CalibratedClassifierCV
+from sklearn.isotonic import IsotonicRegression
 
 #df = pd.read_csv('../data/preprocess/merged_team_matchups.csv')
 df = pd.read_csv('../data/preprocess/merged2.csv')
@@ -117,7 +118,10 @@ for i in range(4, len(allSeasons)):
               eval_set=[(X_test,y_test)],
               verbose=VERBOSE
               )
-    preds_xgb = model.predict_proba(X_test)[:, 1]
+    preds_xgb = model.predict_proba(X_test)[:,1]
+
+
+    #preds_xgb = calibrated_xgb.predict_proba(X_test)[:, 1]
     
     scaler = StandardScaler()
     X_train_scaled = scaler.fit_transform(X_train_lr)
@@ -125,8 +129,8 @@ for i in range(4, len(allSeasons)):
     lr = LogisticRegression(max_iter=1000)
     lr.fit(X_train_scaled, y_train)
     pred_lr = lr.predict_proba(X_test_scaled)[:,1]
+    
     preds = 0.6 * preds_xgb + 0.4 * pred_lr
-
     preds = np.clip(preds, 0.01, 0.99)
     LL = log_loss(y_test, preds)
 
