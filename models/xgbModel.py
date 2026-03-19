@@ -51,6 +51,14 @@ features = [
     'OffvsDefLow',
     'OffvsDefHi'
 ]
+lr_features = [
+        'NetRtgDiff',
+        'EloDiff',
+        'SeedDiff',
+        'WinDiff',
+        'MarginDiff'
+        ]
+
 target = 'Target'
 
 df = df.dropna()
@@ -66,6 +74,9 @@ for i in range(4, len(allSeasons)):
 
     X_train = train_df[features]
     y_train = train_df[target]
+    
+    X_train_lr = train_df[lr_features]
+    X_test_lr = test_df[lr_features]
 
     X_test = test_df[features]
     y_test = test_df[target]
@@ -109,8 +120,8 @@ for i in range(4, len(allSeasons)):
     preds_xgb = model.predict_proba(X_test)[:, 1]
     
     scaler = StandardScaler()
-    X_train_scaled = scaler.fit_transform(X_train)
-    X_test_scaled = scaler.transform(X_test)
+    X_train_scaled = scaler.fit_transform(X_train_lr)
+    X_test_scaled = scaler.transform(X_test_lr)
     lr = LogisticRegression(max_iter=1000)
     lr.fit(X_train_scaled, y_train)
     pred_lr = lr.predict_proba(X_test_scaled)[:,1]
